@@ -1,0 +1,26 @@
+{
+  "name": "mock",
+  "version": "0.0.1",
+  "description": "a dynamic mock server",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "mocha test/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=7.9.0"
+  },
+  "dependencies": {
+    "express": "^4.15.3",
+    "glob": "^7.1.2",
+    "ldapjs": "^1.0.1",
+    "mysql2": "^1.2.0",
+    "sequelize": "^3.30.4"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "mocha": "^3.4.1"
+  }
+}
