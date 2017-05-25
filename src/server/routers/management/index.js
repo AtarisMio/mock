@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 router.get('/', (req, res) => {
-    res.sendfile('./template.html', {
+    res.sendFile('./template.html', {
         root: __dirname
     });
 });
