@@ -1,0 +1,38 @@
+{
+    "env": {
+        "browser": false,
+        "node": true,
+        "es6": true
+    },
+    "extends": [
+        "standard",
+        "eslint:recommended"
+    ],
+    "ecmaFeatures": {
+        "modules": true
+    },
+    "rules": {
+        "no-confusing-arrow": 0,
+        "indent": [
+            "error",
+            4
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "no-console": 0,
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "object-curly-spacing": [
+            2,
+            "always"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
+    }
+}

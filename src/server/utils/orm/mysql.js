@@ -8,7 +8,7 @@ const sequelize = new Sequelize(config.database, config.user, config.password, {
         min: 0,
         idle: 10000
     }
-})
+});
 
 sequelize
     .authenticate()
