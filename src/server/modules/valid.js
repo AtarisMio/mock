@@ -5,7 +5,7 @@ const postValid = require('./postValid');
 
 const valid = sequelize.define('valid', {
     id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
-    action: Sequelize.STRING,
+    action: Sequelize.TEXT,
     preValid: {
         type: Sequelize.INTEGER,
         reference: {
