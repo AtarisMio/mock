@@ -1,15 +1,19 @@
 'use strict';
 
 const express = require('express');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
 
-const { log4js, expressLogger } = require('./utils/logger')
+const { log4js, expressLogger } = require('./utils/logger');
 
 app.use(log4js.connectLogger(expressLogger, { level: log4js.levels.INFO }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use('/static', express.static('src/static'));
 app.use('/mock', require('./server/routers'));
 
-app.get('/*', function(req,res,next){ // 载入mock规则
+app.all('/*', function(req,res,next){ // 载入mock规则
     console.log(req.url);
     debugger;
     next();
