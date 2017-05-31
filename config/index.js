@@ -13,6 +13,7 @@ const Environments = {
 const env = process.env.NODE_ENV && (process.env.NODE_ENV.toLowerCase() in Environments) && Environments[process.env.NODE_ENV] || 'development';
 
 const configs = {
+    env,
     Storage: 'mysql'
 };
 

@@ -2,7 +2,7 @@ const router = require('express').Router();
 const glob = require('glob');
 
 const routers = glob.sync('*', {
-    cwd: 'src/server/routers'
+    cwd: __dirname
 });
 
 routers.filter(r => r.indexOf('.') === -1).map(route => 

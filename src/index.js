@@ -1,12 +1,21 @@
 'use strict';
 
 const express = require('express');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
 
-app.use('/static', express.static('src/static'));
+const { log4js, expressLogger } = require('./utils/logger');
 
+app.use(log4js.connectLogger(expressLogger, { level: log4js.levels.INFO }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use('/static', express.static('src/static'));
 app.use('/mock', require('./server/routers'));
 
-app.listen(3000, function() {
+app.use('/*', require('./mock'));
+
+
+app.listen(3000, function () {
     console.log('App listening on port 3000!');
 });
