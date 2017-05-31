@@ -13,11 +13,7 @@ app.use(cookieParser());
 app.use('/static', express.static('src/static'));
 app.use('/mock', require('./server/routers'));
 
-app.all('/*', function(req,res,next){ // 载入mock规则
-    console.log(req.url);
-    debugger;
-    next();
-});
+app.use('/*', require('./mock'));
 
 
 app.listen(3000, function () {
