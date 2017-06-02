@@ -1,4 +1,6 @@
-const glob = require('glob');
+const glob      = require('glob');
+const path      = require('path');
+const basename  = path.basename(module.filename);
 
 const Environments = {
     'd': 'development',
@@ -17,7 +19,7 @@ const configs = {
     Storage: 'mysql'
 };
 
-glob.sync('!(index.js|example.js)', {
+glob.sync(`!(${basename}|example.js)`, {
     cwd: 'config'
 }).map(config =>
     configs[config.replace('.js', '')] = require(`./${config}`)[env]

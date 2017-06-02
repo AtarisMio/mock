@@ -24,15 +24,20 @@ const getUserInfo = (req, res, next) => {
 
 const getApiRegex = (req, res, next) => {
     const userInfo = req.userInfo;
+    const url = req.url;
     if (userInfo) {
         models.api.findAll({ where : { user: userInfo.id } })
             .then(apis => {
-                apis.map(api => {
+                return apis.filter(api => {
                     const reg = pathRegexp(api.apiPath);
                     const match = reg.exec(url.path);
-
-                })
-            })
+                    return !!match;
+                });
+            }).then(apis => {
+                req.apis = apis;
+                req.shouldCapture = true;
+                next();
+            });
     } else {
         req.shouldCapture = false;
         next();
