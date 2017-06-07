@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const app = express();
+const { api_prefix } = require('./../config').mock;
 
 const { log4js, expressLogger } = require('./utils/logger');
 
@@ -13,7 +14,7 @@ app.use(cookieParser());
 app.use('/static', express.static('src/static'));
 app.use('/mock', require('./server/routers'));
 
-app.use('/*', require('./mock'));
+app.use(`/${api_prefix || ''}`, require('./mock'));
 
 
 app.listen(3000, function () {

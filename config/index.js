@@ -20,7 +20,7 @@ const configs = {
 };
 
 glob.sync(`!(${basename}|example.js)`, {
-    cwd: 'config'
+    cwd: __dirname
 }).map(config =>
     configs[config.replace('.js', '')] = require(`./${config}`)[env]
 );
