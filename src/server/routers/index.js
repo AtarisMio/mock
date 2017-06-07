@@ -1,11 +1,11 @@
-const router = require('express').Router();
-const glob = require('glob');
+const router    = require('express').Router();
+const glob      = require('glob');
 
-const routers = glob.sync('*', {
+const routers = glob.sync('*/**/*\.js', {
     cwd: __dirname
 });
 
-routers.filter(r => r.indexOf('.') === -1).map(route => 
+routers.map(route => route.replace(/\/index\.js|\.js$/, '')).map(route =>
     router.use(`/${route}`, require(`./${route}`))
 );
 
