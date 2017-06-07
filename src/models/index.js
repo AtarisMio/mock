@@ -1,7 +1,7 @@
 const glob      = require('glob');
 const path      = require('path');
 const basename  = path.basename(module.filename);
-const { Sequelize, sequelize } = require('./utils/orm/index');
+const { Sequelize, sequelize } = require('../utils/orm/index');
 
 const modelsName = glob.sync(`!(${basename})`, {
     cwd: __dirname

@@ -1,5 +1,5 @@
 const config = require('./../../config').httpSetting;
-const models = require('./../modules');
+const models = require('./../models');
 var pathRegexp = require('path-to-regexp');
 
 
@@ -10,8 +10,9 @@ const getUserInfo = (req, res, next) => {
         models.user.findOne({ where: { userToken } })
             .then(user => {
                 if (user) {
-                    req.userInfo = user;
+                    req.userInfo = Object.seal(user);
                     req.shouldCapture = true;
+                    console.trace(req.url, req.headers, req.body);
                 } else {
                     req.shouldCapture = false;
                 }
@@ -36,7 +37,7 @@ const getApiRegex = (req, res, next) => {
                 });
             }).then(apis => {
                 if(apis.length !== 0) {
-                    req.apis = Object.freeze(apis);
+                    req.apis = Object.seal(apis);
                     req.shouldCapture = true;
                 } else {
                     req.shouldCapture = false;
@@ -51,19 +52,18 @@ const getApiRegex = (req, res, next) => {
 
 const getPreValid = (req, res, next) => {
     const apis = req.apis;
-    if (apis && apis.length !== 0) {
-        apis.map(api => {
-            models.preValid.findAll({ where: { api: api.id } })
-                .then(preValids => {
-                    if(preValids.length !== 0) {
-                        req.preValids = Object.freeze(preValids);
-                        req.shouldPreValid = true;
-                    } else {
-                        req.shouldPreValid = false;
-                    }
-                    next();
-                });
-        });
+    const api_ids = apis.map(api => api.id);
+    if (api_ids && api_ids.length !== 0) {
+        models.preValid.findAll({ where: { api: { $or: api_ids } } })
+            .then(preValids => {
+                if(preValids.length !== 0) {
+                    req.preValids = Object.seal(preValids);
+                    req.shouldPreValid = true;
+                } else {
+                    req.shouldPreValid = false;
+                }
+                next();
+            });
     } else {
         req.shouldPreValid = false;
         next();
@@ -72,22 +72,27 @@ const getPreValid = (req, res, next) => {
 
 const getPostValid = (req, res, next) => {
     const apis = req.apis;
-    if (apis && apis.length !== 0) {
-        apis.map(api => {
-            models.postValid.findAll({ where: { api: api.id } })
-                .then(postValids => {
-                    if(postValids.length !== 0) {
-                        req.postValids = Object.freeze(postValids);
-                        req.shouldPostValid = true;
-                    } else {
-                        req.shouldPostValid = false;
-                    }
-                    next();
-                });
-        });
+    const api_ids = apis.map(api => api.id);
+    if (api_ids && api_ids.length !== 0) {
+        models.postValid.findAll({ where: { api: { $or: api_ids } } })
+            .then(postValids => {
+                if(postValids.length !== 0) {
+                    req.postValids = Object.seal(postValids);
+                    req.shouldPostValid = true;
+                } else {
+                    req.shouldPostValid = false;
+                }
+                next();
+            });
     } else {
         req.shouldPostValid = false;
         next();
     }
 };
 
+module.exports = {
+    getUserInfo,
+    getApiRegex,
+    getPreValid,
+    getPostValid
+};
