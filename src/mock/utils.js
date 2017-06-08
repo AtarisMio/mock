@@ -1,5 +1,5 @@
 const config = require('./../../config').httpSetting;
-const models = require('./../models');
+const models = require('./../models').models;
 var pathRegexp = require('path-to-regexp');
 
 

@@ -20,15 +20,17 @@ for(let modelName in models) {
     }
 }
 
-function createTables(...tables) {
+async function resync(...tables) {
     for(let table of tables) {
-        table.sync({ force: true });
+        await table.sync({ force: true });
     }
 }
 
-module.exports = Object.assign({}, models, {
-    method: {
+module.exports = Object.assign({}, {
+    methods: {
         Sequelize,
-        createTables
-    }
+        resync,
+        createTables: resync
+    },
+    models
 });
