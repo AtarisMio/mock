@@ -51,8 +51,7 @@ const getApiRegex = (req, res, next) => {
 };
 
 const getPreValid = (req, res, next) => {
-    const apis = req.apis;
-    const api_ids = apis.map(api => api.id);
+    const api_ids = req.apis && req.apis.map(api => api.id);
     if (api_ids && api_ids.length !== 0) {
         models.preValid.findAll({ where: { api: { $or: api_ids } } })
             .then(preValids => {
@@ -71,8 +70,7 @@ const getPreValid = (req, res, next) => {
 };
 
 const getPostValid = (req, res, next) => {
-    const apis = req.apis;
-    const api_ids = apis.map(api => api.id);
+    const api_ids = req.apis && req.apis.map(api => api.id);
     if (api_ids && api_ids.length !== 0) {
         models.postValid.findAll({ where: { api: { $or: api_ids } } })
             .then(postValids => {
