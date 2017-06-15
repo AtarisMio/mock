@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
+    "create-table": "node src/index.js create-table",
     "test": "mocha test/index.js"
   },
   "author": "",
@@ -19,6 +20,7 @@
     "glob": "^7.1.2",
     "ldapjs": "^1.0.1",
     "mysql2": "^1.2.0",
+    "request": "^2.81.0",
     "sequelize": "^3.30.4"
   },
   "devDependencies": {
