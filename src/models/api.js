@@ -2,6 +2,7 @@ module.exports = (sequelize, DataTypes) =>
     sequelize.define('api', {
         id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
         apiPath: DataTypes.STRING,
+        method: DataTypes.STRING,
         user: {
             type: DataTypes.INTEGER,
             reference: {
