@@ -26,4 +26,4 @@ glob.sync(`!(${basename}|example.js)`, {
 );
 
 
-module.exports = configs;
+module.exports = Object.freeze(configs);
