@@ -3,6 +3,7 @@ const path      = require('path');
 const basename  = path.basename(module.filename);
 
 const Environments = {
+    'debug': 'debug',
     'd': 'development',
     'dev': 'development',
     'development': 'development',

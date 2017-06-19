@@ -1,5 +1,17 @@
 const request = require('request');
 
 module.exports = (req, res, next) => {
-    res.locals = req.pipe(request(`${req.backend}${req.originalUrl}`)).pipe(res);
+    const startProxyTime = new Date().valueOf();
+    request({ url: `${req.backend}${req.originalUrl}`, method: req.method, form: req.body }, (error, response, body) => {
+        const endProxyTime = new Date().valueOf();
+        const serverPenddingTime = endProxyTime - startProxyTime;
+        try {
+            res.locals.data = JSON.parse(body);
+        } catch(e) {
+            res.locals.data = body.length > 1000 ? body.substr(0, 1000) : body;
+        } finally {
+            res.locals = Object.assign({}, res.locals, { startProxyTime, endProxyTime, serverPenddingTime });
+        }
+        next();
+    }).pipe(res);
 };
