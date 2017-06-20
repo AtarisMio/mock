@@ -1,42 +1,27 @@
-class Generator {
-    constructor(generatorRule) {
-        this.data = '';
-        this.rule = generatorRule;
-        this.splitRules = [];
-        this.testPass = false;
+const regulex = require('regulex');
+
+class dataGenerator {
+    constructor(regex) {
+        this.AST = regulex.parse(new RegExp(regex).source).tree;
+        this.__traversal = function* __traversal (current) {
+            for(let node of current) {
+                if (node.type === 'group') {
+                    yield* __traversal(node.sub);
+                } else {
+                    yield node;
+                }
+            }
+        }(this.AST);
     }
 
-    test() {
-        const ruleRegex = new RegExp(this.rule);
-        if (this.data) {
-            this.testPass = ruleRegex.test(this.data);
-        }
-        return this.testPass;
+    getNext() {
+        return this.__traversal.next();
     }
 
-    splitSourceRegex() {
-        let splitor = split(this.rule);
-        let res;
-        while(res = splitor.next(),!res.done) {
-            this.splitRules.push(res.value);
-        }
-    }
 }
 
-const a_regex_used_to_split_regex = /^(\\(d|D|s|S|w|W|u[0-9a-fA-F]{4,5}|x[0-9a-fA-F]{2})|\[\S+\]|\S|\\)(\*|\+|\?|\{\d+\,\d*\})?/;
-
-function* split(rule) {
-    let tempRule = rule;
-    while(tempRule.length > 0) {
-        const result = a_regex_used_to_split_regex.exec(tempRule)[0];
-        if(result.length === 0) {
-            console.error('may there a error!');
-            yield tempRule;
-            break;
-        }
-        yield result;
-        tempRule = tempRule.substr(result.length);
-    }
+let a = new dataGenerator('var\\D\\s+([^a-z])([abcd-zA-Z_](\\w*));');
+let tmp;
+while(tmp=a.getNext(), !tmp.done) {
+    console.log(tmp.value);
 }
-
-module.exports = Generator;
