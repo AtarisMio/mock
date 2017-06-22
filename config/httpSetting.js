@@ -6,7 +6,8 @@ const development = {
      * 输入array的时候则匹配到第一个满足prefix的地址，如都不能匹配则进入next
      */
     backendServers: 'https://m.gomemyc.com',
-    userSection: 'userInfo'
+    userSection: 'userInfo',
+    cookieExpires: 2 * 60 * 60 * 1000 // 2小时
     // 写入开发配置
 };
 
