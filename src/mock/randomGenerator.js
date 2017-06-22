@@ -1,5 +1,5 @@
 class CustomRandom {
-    constructor(start, end, seed = new Date().valueOf()) {
+    constructor(start = 0, end = 10, seed = new Date().valueOf()) {
         this.setStart(start);
         this.setEnd(end);
         this.setSeed(seed);
@@ -12,6 +12,13 @@ class CustomRandom {
             throw `arguments may unsafe. start=${start};`;
         }
         this.start = Number.parseInt(start);
+        this.interval = this.end - this.start;
+        return this;
+    }
+
+    setBoundary(start, end) {
+        this.setStart(start);
+        this.setEnd(end);
         return this;
     }
 
@@ -20,6 +27,7 @@ class CustomRandom {
             throw `arguments may unsafe. end=${end};`;
         }
         this.end = Number.parseInt(end);
+        this.interval = this.end - this.start;
         return this;
     }
 

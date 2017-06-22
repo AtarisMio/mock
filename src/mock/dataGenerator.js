@@ -1,6 +1,26 @@
 const regulex = require('regulex');
 const randomGenerator = require('./randomGenerator');
-const random = new randomGenerator(0,10);
+const random = new randomGenerator();
+
+const DEFFAULT_MAXLENGTH = 20;
+
+const dotNonMuster = {
+    chars: '\u000a\u000c\u2028\u2029'
+};
+
+const digitMuster = {
+    ranges: ['09']
+};
+
+const alphanumericMuster = {
+    chars: '_',
+    ranges: ['09','az','AZ']
+}
+
+const whitespaceMuster = {
+    chars: '\u000c\u000a\u000c\u0009\u000b​\u00a0\u1680​\u180e\u2000​\u2001\u2002​\u2003\u2004​\u2005\u2006​\u2007\u2008​\u2009\u200a​\u2028\u2029​​\u202f\u205f​\u3000'
+}
+
 
 /**
 AST:
@@ -70,55 +90,95 @@ AST:
 
 class dataGenerator {
     constructor(regex) {
-        this.parseAST = this.parseAST.bind(this);
-        this.AST = regulex.parse(new RegExp(regex).source).tree;
-        this.parseAST(this.AST);
-        this.__traversal = function* __traversal(current) {
-            for (let node of current) {
-                switch (node.type) {
-                    case 'choice':
+        if (typeof regex === 'string') {
+            regex = new RegExp(regex);
+        }
+        this.AST = regulex.parse(regex.source);
+        this.Groups = [];
 
-                        break;
-                    case 'group':
-                        yield* __traversal(node.sub);
-                        break;
-                    case 'backref':
-                        continue;
-                    default:
-                        break;
-                }
-            }
-        }(this.AST);
+        // dev
+        this.productData();
+
+        return ;
     }
 
-    parseAST(tree) {
-        let previousIndex = 0;
-        let currentIndex = 1;
-        while (previousIndex <= tree.length) {
-            let previousValue = tree[previousIndex];
-            let currentValue = tree[currentIndex];
-
-            previousIndex++;
-            currentIndex++;
-        }
-        tree.reduce((prevVal, currentVal) => {
-            switch (currentVal.type) {
-                case 'backref':
-                    prevVal.refTimes = currentVal.num;
-                    break;
-                case 'choice':
-                    currentVal.sub = [currentVal.branches[random.setEnd(currentVal.branches.length).next()]];
-                    currentVal.type = 'group';
-                    this.parseAST(currentVal.sub);
-                    break;
-                case 'group':
-                    this.parseAST(currentVal.sub);
-                    break;
-                default:
-                    break;
+    productData() {
+        this.AST.traverse((node) => {
+            if (node) {
+                if (node.type === 'group') {
+                    this.Groups[node.num] = node;
+                }
+                if (node.type === 'choice') {
+                    let targetBranch = node.branches[random.setBoundary(0,node.branches.length - 1).next()];
+                    // 不知道会不会出现除0以外的情况 需要测试
+                    node.sub = [targetBranch[0]];
+                    node.type = 'group';
+                }
+                this.dataFactory(node);
             }
-            return currentVal;
-        })
+        });
+    }
+
+    dataFactory(node, type = node.type) {
+        switch (type) {
+            case 'choice':
+                throw new Error('there shouldn\'t be type of [\'choice\']');
+            case 'exact':
+                this.exactDataFactory(node);
+                break;
+            case 'empty':
+                node.chars = '';
+                node.type = 'exact';
+                this.exactDataFactory(node);
+                break;
+            case 'assert':
+                if (node.assertionType === 'AssertLookahead') {
+                    node.type = 'group';
+                } else if (node.assertionType === 'AssertWordBoundary'){
+                    node.chars = ' ';
+                    node.type = 'exact';
+                    this.exactDataFactory(node);
+                } else {
+                    // 暂时当成empty来处理
+                    node.chars = '';
+                    node.type = 'exact';
+                    this.exactDataFactory(node);
+                }
+                break;
+            case 'dot':
+                this.charsetFactory(node);
+                break;
+            case 'charset':
+
+                break;
+            default:
+                return;
+        }
+    }
+
+    exactDataFactory(node) {
+        node.resultData = node.chars;
+        this.repeatFactory(node);
+    }
+    charsetFactory(node) {
+
+    }
+    repeatFactory(node, type = node.type) {
+        if (!node.resultData) {
+            throw new Error('there should be property [\'resultData\']');
+        }
+        if ()
+        if (node.repeat && node.repeat.min) {
+            if(node.repeat.max === undefined) {
+                node.resultData = node.resultData.repeat(node.repeat.min);
+            } else if (Number.isFinite(node.repeat.max)) {
+                node.resultData = node.resultData.repeat(random.setBoundary(node.repeat.min, node.repeat.max).next());
+            } else if (node.repeat.max === Number.POSITIVE_INFINITY) {
+                node.resultData = node.resultData.repeat(random.setBoundary(node.repeat.min, DEFFAULT_MAXLENGTH).next());
+            } else {
+                throw new Error('there may an error');
+            }
+        }
     }
 
     getNext() {
@@ -127,7 +187,7 @@ class dataGenerator {
 
 }
 
-let a = new dataGenerator('(var|let)\\D\\s+([^a-z])([abcd-zA-Z_](\\w*));');
+let a = new dataGenerator('.(var|let)\\D\\s+([^a-z])([abcd-zA-Z_](\\w*));');
 let tmp;
 while (tmp = a.getNext(), !tmp.done) {
     console.log(tmp.value);
