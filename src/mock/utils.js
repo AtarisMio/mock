@@ -18,9 +18,9 @@ if (typeof httpSetting.backendServers === 'string') {
 const getUserInfo = (req, res, next) => {
     const headers = req.headers;
     const cookies = req.cookies;
-    const userToken = headers[httpSetting.userSection] || cookies[httpSetting.userSection] || false; // 从headers内获取特定的用户标识
-    if (userToken) {
-        models.user.findOne({ where: { userToken } })
+    const apiToken = headers[httpSetting.userSection] || cookies[httpSetting.userSection] || false; // 从headers内获取特定的用户标识
+    if (apiToken) {
+        models.user.findOne({ where: { apiToken } })
             .then(user => {
                 if (user) {
                     req.userInfo = Object.seal(user);

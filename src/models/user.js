@@ -3,12 +3,12 @@ module.exports = (sequelize, DataTypes) =>
         id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
         userName: DataTypes.STRING,
         chineseName: DataTypes.STRING,
-        userToken: { type: DataTypes.STRING, unique: true }
+        apiToken: { type: DataTypes.STRING, unique: true }
     }, {
         indexes: [
             {
                 method: 'HASH',
-                fields: ['userToken']
+                fields: ['apiToken']
             }
         ]
     });
