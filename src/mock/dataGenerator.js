@@ -1,26 +1,17 @@
 const regulex = require('regulex');
-const randomGenerator = require('./randomGenerator');
+const randomGenerator = require('./../utils/randomGenerator');
 const random = new randomGenerator();
-
+const Ranges = require('range-calculator');
 const DEFFAULT_MAXLENGTH = 20;
 
-const dotNonMuster = {
-    chars: '\u000a\u000c\u2028\u2029'
-};
-
-const digitMuster = {
-    ranges: ['09']
-};
-
-const alphanumericMuster = {
-    chars: '_',
-    ranges: ['09','az','AZ']
-}
-
-const whitespaceMuster = {
-    chars: '\u000c\u000a\u000c\u0009\u000b​\u00a0\u1680​\u180e\u2000​\u2001\u2002​\u2003\u2004​\u2005\u2006​\u2007\u2008​\u2009\u200a​\u2028\u2029​​\u202f\u205f​\u3000'
-}
-
+const dotRanges = [[0x0, 0x9], [0xb, 0xb], [0xd, 0x2027], [0x202a, 0xffff]];
+// const dotNotRanges = [[0xa, 0xa], [0xc, 0xc], [0x2028, 0x2029]];
+const digitRanges = [[0x30, 0x39]];
+const digitNotRanges = [[0x0, 0x2f], [0x3a, 0xffff]];
+const alphanumericRanges = [[0x30, 0x39], [0x41, 0x5a], [0x5f, 0x5f], [0x61, 0x7a]];
+const alphanumericNotRanges = [[0x0, 0x2f], [0x3a, 0x40], [0x5b, 0x5e], [0x60, 0x60], [0x7b, 0xffff]];
+const whitespaceRanges = [[0x9, 0xc], [0x20, 0x20], [0xa0, 0xa0], [0x1680, 0x1680], [0x180e, 0x180e], [0x2000, 0x200b], [0x2028, 0x2029], [0x202f, 0x202f], [0x205f, 0x205f], [0x3000, 0x3000]];
+const whitespaceNotRanges = [[0, 0x8], [0xd, 0x1f], [0x21, 0x9f], [0xa1, 0x167f], [0x180f, 0x1fff], [0x200c, 0x2027], [0x202a, 0x202e], [0x2030, 0x205e], [0x2060, 0x2fff], [0x3001, 0xffff]];
 
 /**
 AST:
@@ -86,8 +77,6 @@ AST:
     }
 */
 
-
-
 class dataGenerator {
     constructor(regex) {
         if (typeof regex === 'string') {
@@ -95,28 +84,37 @@ class dataGenerator {
         }
         this.AST = regulex.parse(regex.source);
         this.Groups = [];
-
-        // dev
-        this.productData();
-
-        return ;
     }
 
     productData() {
-        this.AST.traverse((node) => {
+        this.AST.traverse(node => {
             if (node) {
                 if (node.type === 'group') {
                     this.Groups[node.num] = node;
                 }
                 if (node.type === 'choice') {
-                    let targetBranch = node.branches[random.setBoundary(0,node.branches.length - 1).next()];
+                    let targetBranch = node.branches[random.setBoundary(0, node.branches.length - 1).next()];
                     // 不知道会不会出现除0以外的情况 需要测试
                     node.sub = [targetBranch[0]];
                     node.type = 'group';
                 }
-                this.dataFactory(node);
+                this.repeatFactory(node, this.dataFactory.bind(this));
             }
         });
+        return (function DFS_traverse(nodes) {
+            let tmp = '';
+            nodes.map((node) => {
+                if (node.sub) {
+                    tmp += node.resultData = DFS_traverse(node.sub);
+                } else {
+                    tmp += node.resultData;
+                }
+                if (node.type === 'backref') { // 响应bcakref的引用情况
+                    tmp += node.resultData = this.Groups[node.num].resultData;
+                }
+            });
+            return tmp;
+        }).bind(this)(this.AST.tree);
     }
 
     dataFactory(node, type = node.type) {
@@ -134,7 +132,7 @@ class dataGenerator {
             case 'assert':
                 if (node.assertionType === 'AssertLookahead') {
                     node.type = 'group';
-                } else if (node.assertionType === 'AssertWordBoundary'){
+                } else if (node.assertionType === 'AssertWordBoundary') {
                     node.chars = ' ';
                     node.type = 'exact';
                     this.exactDataFactory(node);
@@ -146,49 +144,104 @@ class dataGenerator {
                 }
                 break;
             case 'dot':
+                if (node.classes) {
+                    node.classes.push('.');
+                } else {
+                    node.classes = ['.'];
+                }
                 this.charsetFactory(node);
                 break;
             case 'charset':
-
+                this.charsetFactory(node);
                 break;
             default:
                 return;
         }
     }
 
-    exactDataFactory(node) {
-        node.resultData = node.chars;
-        this.repeatFactory(node);
-    }
-    charsetFactory(node) {
-
-    }
-    repeatFactory(node, type = node.type) {
-        if (!node.resultData) {
-            throw new Error('there should be property [\'resultData\']');
+    exactDataFactory(node, chars = node.chars) {
+        if (node.resultData) {
+            node.resultData += chars;
+        } else {
+            node.resultData = chars;
         }
-        if ()
+    }
+
+    charsetFactory(node) {
+        let r = new Ranges(-1, -1);
+        node.ranges && node.ranges.reduce((pre, cur) => pre.add([cur.charCodeAt(0), cur.charCodeAt(1)]), r);
+        node.chars && node.chars.split('').map(v => r.add([v.charCodeAt(0), v.charCodeAt(0)]));
+        node.classes && node.classes.map(c => {
+            switch (c) {
+                case 'd':
+                    digitRanges.map(r.add.bind(r));
+                    break;
+                case 'D':
+                    digitNotRanges.map(r.add.bind(r));
+                    break;
+                case 'w':
+                    alphanumericRanges.map(r.add.bind(r));
+                    break;
+                case 'W':
+                    alphanumericNotRanges.map(r.add.bind(r));
+                    break;
+                case 's':
+                    whitespaceRanges.map(r.add.bind(r));
+                    break;
+                case 'S':
+                    whitespaceNotRanges.map(r.add.bind(r));
+                    break;
+                case '.':
+                    dotRanges.map(r.add.bind(r));
+                    break;
+                default:
+                    console.log('Unknow class \\' + c);
+                    break;
+            }
+        });
+        if (node.exclude) {
+            let tmp = new Ranges(0, 0xffff);
+            r.ranges.map(tmp.sub.bind(tmp));
+            r = tmp;
+        }
+        r.sub([-1, -1]);
+        // 选取生成在哪个range
+        const rangeNum = random.setBoundary(0, r.ranges.length - 1).next();
+        const targetRange = r.ranges[rangeNum];
+        if (targetRange[0] === targetRange[1]) {
+            return this.exactDataFactory(node, String.fromCharCode(targetRange[0]));
+        }
+        return this.exactDataFactory(node, String.fromCharCode(random.setBoundary(targetRange[0], targetRange[1]).next()));
+    }
+
+    repeatFactory(node, handle, type = node.type) {
+        if (!node.resultData) {
+            node.resultData = '';
+        }
         if (node.repeat && node.repeat.min) {
-            if(node.repeat.max === undefined) {
-                node.resultData = node.resultData.repeat(node.repeat.min);
+            let targetTime = node.repeat.min;
+            if (node.repeat.max === undefined) {
+                targetTime = node.repeat.min;
             } else if (Number.isFinite(node.repeat.max)) {
-                node.resultData = node.resultData.repeat(random.setBoundary(node.repeat.min, node.repeat.max).next());
+                targetTime = random.setBoundary(node.repeat.min, node.repeat.max).next();
             } else if (node.repeat.max === Number.POSITIVE_INFINITY) {
-                node.resultData = node.resultData.repeat(random.setBoundary(node.repeat.min, DEFFAULT_MAXLENGTH).next());
+                targetTime = random.setBoundary(node.repeat.min, DEFFAULT_MAXLENGTH).next();
             } else {
                 throw new Error('there may an error');
             }
+            for (let i = 0; i < targetTime; i++) {
+                handle(node);
+            }
+        } else {
+            handle(node);
         }
     }
 
-    getNext() {
-        return this.__traversal.next();
-    }
-
 }
 
-let a = new dataGenerator('.(var|let)\\D\\s+([^a-z])([abcd-zA-Z_](\\w*));');
-let tmp;
-while (tmp = a.getNext(), !tmp.done) {
-    console.log(tmp.value);
-}
+// let a = new dataGenerator('\\s+');
+// for(let i=0;i<10;i++){
+//     let r = a.productData();
+//     console.log(r, r.split('').reduce((i,c)=>i+=' '+c.charCodeAt(0),''))
+// }
+module.exports = dataGenerator;
