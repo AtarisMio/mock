@@ -3,7 +3,8 @@ const development = {
     user        : 'root',
     password    : 'root',
     database    : 'db_mock',
-    tb_prefix   : 'mock'
+    tb_prefix   : 'mock',
+    salt        : 'ace1302f35f06a21b3ef0af1e'
 };
 
 const prodution = {
