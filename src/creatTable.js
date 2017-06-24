@@ -13,11 +13,12 @@ Please comfirm you are REALLY want to do this? (Y/n)
     if (answer.match(/^y(es)?$/i)) {
         console.warn('Start resync all models!');
         const { methods, models } = require('./models/index');
-        await methods.createTables(...Object.values(models));
+        // 建表顺序很重要，外键关联的表要先建
+        await methods.createTables(models.user, models.token, models.api, models.preValid, models.postValid, models.valid, models.dataGenerator);
         console.warn('Operation is done! Has resync all models!');
     } else {
         console.warn('Operation has been canceled!');
     }
     rl.close();
     process.exit(0);
-}
+});

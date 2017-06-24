@@ -1,14 +1,21 @@
+const config = require('./../../config').httpSetting;
+
 module.exports = (sequelize, DataTypes) =>
-    sequelize.define('user', {
-        id: { type: DataTypes.UUIDV4, autoIncrement: true, primaryKey: true, unique: true },
-        generateTime: DataTypes.NOW,
-        user: {
-            type: DataTypes.INTEGER,
-            reference: {
-                model: 'user',
-                key: 'id'
+    sequelize.define('token', {
+        id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true, unique: true },
+        valid: {
+            type: new DataTypes.VIRTUAL(DataTypes.BOOLEAN, ['createdAt']),
+            get: function() {
+                return this.get('createdAt') > Date.now() - config.cookieExpires;
             }
         }
+        // user: {
+        //     type: DataTypes.INTEGER,
+        //     reference: {
+        //         model: 'user',
+        //         key: 'id'
+        //     }
+        // }
     }, {
         indexes: [
             {
