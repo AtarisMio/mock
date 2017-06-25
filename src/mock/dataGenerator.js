@@ -89,6 +89,7 @@ class dataGenerator {
     productData() {
         this.AST.traverse(node => {
             if (node) {
+                node.resultData = '';
                 if (node.type === 'group') {
                     this.Groups[node.num] = node;
                 }
@@ -239,9 +240,11 @@ class dataGenerator {
 
 }
 
-// let a = new dataGenerator('\\s+');
+// let a = new dataGenerator('[你-好]+');
+
 // for(let i=0;i<10;i++){
 //     let r = a.productData();
-//     console.log(r, r.split('').reduce((i,c)=>i+=' '+c.charCodeAt(0),''))
+//     console.log(r, r.split('').reduce((i,c)=>i+=' '+c.charCodeAt(0).toString(16),''));
 // }
+
 module.exports = dataGenerator;
