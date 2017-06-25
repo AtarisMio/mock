@@ -14,7 +14,7 @@ Please comfirm you are REALLY want to do this? (Y/n)
         console.warn('Start resync all models!');
         const { methods, models } = require('./models/index');
         // 建表顺序很重要，外键关联的表要先建
-        await methods.createTables(models.user, models.token, models.api, models.preValid, models.postValid, models.valid, models.dataGenerator);
+        await methods.createTables(models.user, models.token, models.api, models.valid, models.dataGenerator);
         console.warn('Operation is done! Has resync all models!');
     } else {
         console.warn('Operation has been canceled!');
