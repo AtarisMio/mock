@@ -12,6 +12,16 @@ const userNameIsUsed = async (username) => {
     return !!await getUserInstanceByUsername(username);
 };
 
+const signin = async (username, password) => {
+    const userInstance = await user.findOne({ where: { username } });
+    if (userInstance) {
+        if(userInstance.password === md5(userInstance.salt + password)) {
+            return true;
+        }
+    }
+    return false;
+};
+
 const createUser = async (username, password) => {
     return await user.create({
         username,
@@ -28,7 +38,7 @@ const createToken = async (userInstance) => {
 
 const getUserInstanceByToken = async (mockToken) => {
     const tokenInstance = await token.findById(mockToken);
-    if(!tokenInstance || !tokenInstance.valid) {
+    if (!tokenInstance || !tokenInstance.valid) {
         destroyToken(mockToken);
         const e = new Error('token has Expired!');
         e.type = 'tokenExpired';
@@ -45,6 +55,7 @@ module.exports = {
     getUserInstanceByUsername,
     userNameIsUsed,
     createUser,
+    signin,
     createToken,
     getUserInstanceByToken,
     destroyToken
