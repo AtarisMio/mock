@@ -6,17 +6,26 @@ module.exports = (sequelize, DataTypes) =>
         username: { type: DataTypes.STRING, unique: true },
         password_hash: DataTypes.STRING,
         password: {
-            type: DataTypes.VIRTUAL,
+            type: new DataTypes.VIRTUAL(DataTypes.STRING, ['salt', 'password_hash']),
+            get: function() {
+                return this.get('password_hash');
+            },
             set: function(val) {
                 this.setDataValue('password', val);
-                this.setDataValue('password_hash', md5(config.salt + val));
+                this.setDataValue('password_hash', md5(this.get('salt') + val));
             },
             validate: {
-                isLongEnough: function (val) {
+                isLongEnough (val) {
                     if (val.length < 4) {
                         throw new Error('Please choose a longer password');
                     }
                 }
+            }
+        },
+        salt: {
+            type: new DataTypes.VIRTUAL(DataTypes.STRING, ['username', 'createdAt']),
+            get: function() {
+                return config.salt + this.get('username');
             }
         },
         chineseName: DataTypes.STRING,
