@@ -11,25 +11,25 @@ const auth = (type = auth.anonymous) => {
         return async (req, res, next) => {
             const mockToken = req.cookies.mockToken;
             if (!mockToken) {
-                // todo 页面应当重定向
-
-                // api返回401
-                res.status(401).json(Packing({}, 401, 'Unauthorized', '用户未登录'));
+                if (/\/api\//.test(req.url)) { // api返回401
+                    res.status(401).json(Packing({}, 401, 'Unauthorized', '用户未登录'));
+                    return;
+                } else { // 页面应当重定向
+                    res.redirect('/mock/management/signin');
+                }
             }
             let user;
             try {
                 user = await getUserInstanceByToken(mockToken);
             } catch (e) {
-                if(e.type === 'tokenExpired') {
-                    // todo 页面应当重定向
-
-                    // api返回401
+                if (/\/api\//.test(req.url)) { // api返回401
                     res.status(401).json(Packing({}, 401, 'Unauthorized', '用户未登录'));
                     return;
+                } else { // 页面应当重定向
+                    res.redirect('/mock/management/signin');
                 }
             }
-            req.userInfo = user;
-            // 在req上挂user信息
+            req.userInfo = user;// 在req上挂user信息
             await next();
         };
     }
