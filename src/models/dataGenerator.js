@@ -18,5 +18,6 @@ module.exports = (sequelize, DataTypes) =>
                     }
                 }
             }
-        }
+        },
+        merge: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true }
     });

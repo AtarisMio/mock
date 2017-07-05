@@ -70,7 +70,7 @@ router
         }
         res.status(404).json(Packing({}, 404, 'can\'t find id of ' + id, '找不到对应api'));
     }) // done
-    .patch('/:id', auth(auth.user), async (req, res) => {
+    .put('/:id', auth(auth.user), async (req, res) => {
         const { id } = req.params;
         const api = await req.userInfo.getApi({ where: { id } });
         if (api) {
@@ -124,6 +124,20 @@ router
         }
         res.status(404).json(Packing({}, 404, 'can\'t find id', '找不到对应api'));
     }) // done
+    .put('/:id/preDataGenerator', auth(auth.user), async (req, res) => {
+        // todo 修改preDataGenerator
+    })
+    .delete('/:id/preDataGenerator', auth(auth.user), async (req, res) => {
+        // 删除preDataGenerator
+        const { id } = req.params;
+        const api = await req.userInfo.getApi({ where: { id } });
+        if (api.length) {
+            removeDataGenerator(api[0]);
+            res.status(204).end();
+            return;
+        }
+        res.status(404).json(Packing({}, 404, 'can\'t find id', '找不到对应api'));
+    })
     .get('/:id/postDataGenerator', auth(auth.user), async (req, res) => {
         const { id } = req.params;
         const api = await req.userInfo.getApi({ where: { id } });
@@ -138,23 +152,87 @@ router
         }
         res.status(404).json(Packing({}, 404, 'can\'t find id', '找不到对应api'));
     }) // done
-    .get('/:id/preValid', auth(auth.user), async (req, res) => {
-        // todo 获取preValid
+    .put('/:id/postDataGenerator', auth(auth.user), async (req, res) => {
+        // todo 修改postDataGenerator
     })
-    .patch('/:id/preValid/:validId', auth(auth.user), async (req, res) => {
+    .delete('/:id/postDataGenerator', auth(auth.user), async (req, res) => {
+        // 删除postDataGenerator
+        const { id } = req.params;
+        const api = await req.userInfo.getApi({ where: { id } });
+        if (api.length) {
+            removeDataGenerator(api[0], false);
+            res.status(204).end();
+            return;
+        }
+        res.status(404).json(Packing({}, 404, 'can\'t find id', '找不到对应api'));
+    })
+    .get('/:id/preValid', auth(auth.user), async (req, res) => {
+        // 获取preValid
+        const { id } = req.params;
+        const api = await req.userInfo.getApi({ where: { id } });
+        if (api.length) {
+            const valid = await getValid(api[0]);
+            if (valid) {
+                res.status(200).json(Packing({ preValid: valid }));
+            } else {
+                res.status(404).json(Packing({}, 404, 'can\'t find preValid', '找不到前置数据验证器'));
+            }
+            return;
+        }
+        res.status(404).json(Packing({}, 404, 'can\'t find id', '找不到对应api'));
+    }) // done
+    .put('/:id/preValid/:validId', auth(auth.user), async (req, res) => {
         // todo 修改preValid
     })
     .delete('/:id/preValid/:validId', auth(auth.user), async (req, res) => {
-        // todo 删除preValid
+        // 删除preValid
+        const { id } = req.params;
+        const api = await req.userInfo.getApi({ where: { id } });
+        if (api.length) {
+            const valid = await getValid(api[0], false);
+            if (valid) {
+                await removeValid(valid);
+                res.status(204).end();
+            } else {
+                res.status(404).json(Packing({}, 404, 'can\'t find preValid', '找不到前置数据验证器'));
+            }
+            return;
+        }
+        res.status(404).json(Packing({}, 404, 'can\'t find id', '找不到对应api'));
     })
     .get('/:id/postValid', auth(auth.user), async (req, res) => {
-        // todo 获取postValid
+        // 获取postValid
+        const { id } = req.params;
+        const api = await req.userInfo.getApi({ where: { id } });
+        if (api.length) {
+            const valid = await getValid(api[0], false);
+            if (valid) {
+                res.status(200).json(Packing({ postValid: valid }));
+            } else {
+                res.status(404).json(Packing({}, 404, 'can\'t find postValid', '找不到后置数据验证器'));
+            }
+            return;
+        }
+        res.status(404).json(Packing({}, 404, 'can\'t find id', '找不到对应api'));
     })
-    .patch('/:id/postValid/:validId', auth(auth.user), async (req, res) => {
+    .put('/:id/postValid/:validId', auth(auth.user), async (req, res) => {
         // todo 更新postValid
     })
     .delete('/:id/postValid/:validId', auth(auth.user), async (req, res) => {
-        // todo 删除postValid
+        // 删除postValid
+        const { id } = req.params;
+        const api = await req.userInfo.getApi({ where: { id } });
+        if (api.length) {
+            const valid = await getValid(api[0], false);
+            if (valid) {
+                await removeValid(valid);
+                res.status(204).end();
+            } else {
+                res.status(404).json(Packing({}, 404, 'can\'t find postValid', '找不到后置数据验证器'));
+            }
+            return;
+        }
+        res.status(404).json(Packing({}, 404, 'can\'t find id', '找不到对应api'));
     });
 
 module.exports = router;
