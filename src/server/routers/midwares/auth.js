@@ -1,30 +1,14 @@
 const Packing = require('./../../../utils/packing');
-const { getUserInstanceByToken } = require('./../functions/user');
 
 const auth = (type = auth.anonymous) => {
     if (type === auth.anonymous) {
         return async (req, res, next) => {
-            const mockToken = req.cookies.mockToken;
-            if (!mockToken) {
-                await next();
-                return;
-            }
-            let user;
-            try {
-                user = await getUserInstanceByToken(mockToken);
-            } catch (e) {
-                await next();
-                return;
-            }
-            req.userInfo = user;// 在req上挂user信息
-            res.locals.user = user;
             await next();
         };
     }
     if (type === auth.user) {
         return async (req, res, next) => {
-            const mockToken = req.cookies.mockToken;
-            if (!mockToken) {
+            if(!req.userInfo) {
                 if (/\/api\//.test(req.url)) { // api返回401
                     res.status(401).json(Packing({}, 401, 'Unauthorized', '用户未登录'));
                     return;
@@ -32,19 +16,6 @@ const auth = (type = auth.anonymous) => {
                     res.redirect('/mock/management/signin');
                 }
             }
-            let user;
-            try {
-                user = await getUserInstanceByToken(mockToken);
-            } catch (e) {
-                if (/\/api\//.test(req.url)) { // api返回401
-                    res.status(401).json(Packing({}, 401, 'Unauthorized', '用户未登录'));
-                    return;
-                } else { // 页面应当重定向
-                    res.redirect('/mock/management/signin');
-                }
-            }
-            req.userInfo = user;// 在req上挂user信息
-            res.locals.user = user;
             await next();
         };
     }
