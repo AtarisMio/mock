@@ -2,14 +2,14 @@ const router = require('express').Router();
 const auth = require('./../midwares/auth');
 
 
-router.get('/', (req, res) => {
+router.get('/', auth(), (req, res) => {
     const locals = res.locals;
     locals.selection = 'home';
 
     res.render('home');
 });
 
-router.get('/docs', (req, res) => {
+router.get('/docs', auth(), (req, res) => {
     const locals = res.locals;
     locals.selection = 'docs';
     locals.title = '使用文档';
@@ -23,6 +23,14 @@ router.get('/apis', auth(auth.user), (req, res) => {
     locals.title = '使用文档';
 
     res.render('docs');
+});
+
+router.get('/signup', (req, res) => {
+    const locals = res.locals;
+    locals.selection = 'signup';
+    locals.title = '登录';
+
+    res.render('signin');
 });
 
 router.get('/signin', (req, res) => {

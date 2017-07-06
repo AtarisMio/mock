@@ -35,7 +35,12 @@
                     <li>
                         <a href="/mock/management/signout">登出</a>
                     </li>
-                    {{else}} {{#ifeq selection 'signin'}} {{else}}
+                    {{else}} {{#ifeq selection 'signup'}} {{else}}
+                    <li>
+                        <a href="/mock/management/signup">注册</a>
+                    </li>
+                    {{/ifeq}} 
+                    {{#ifeq selection 'signin'}} {{else}}
                     <li>
                         <a href="/mock/management/signin">登录</a>
                     </li>

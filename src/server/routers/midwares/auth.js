@@ -4,6 +4,20 @@ const { getUserInstanceByToken } = require('./../functions/user');
 const auth = (type = auth.anonymous) => {
     if (type === auth.anonymous) {
         return async (req, res, next) => {
+            const mockToken = req.cookies.mockToken;
+            if (!mockToken) {
+                await next();
+                return;
+            }
+            let user;
+            try {
+                user = await getUserInstanceByToken(mockToken);
+            } catch (e) {
+                await next();
+                return;
+            }
+            req.userInfo = user;// 在req上挂user信息
+            res.locals.user = user;
             await next();
         };
     }
@@ -30,6 +44,7 @@ const auth = (type = auth.anonymous) => {
                 }
             }
             req.userInfo = user;// 在req上挂user信息
+            res.locals.user = user;
             await next();
         };
     }
