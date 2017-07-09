@@ -8,8 +8,8 @@ window.onload = function() {
         }).done(function(res) {
             console.log(res);
         }).fail(function(xhr, status, err) {
-            console.log(xhr, status, err);
+            console.log(status, err);
+            errorModal(xhr.responseJSON.message, '登录错误');
         })
-        
-    })
+    });
 }

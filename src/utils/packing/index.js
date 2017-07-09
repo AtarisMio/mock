@@ -4,9 +4,9 @@ const Packing = (result, errorCode, internalMessage, friendlyMessage) => {
         internalMessage,
         message: friendlyMessage || 'success',
         responseFrom: {
-            gid: process.getgid(),
+            gid: process.getgid && process.getgid(),
             pid: process.pid,
-            uid: process.getuid()
+            uid: process.getuid && process.getuid()
         },
         result,
         success: errorCode ? false : true

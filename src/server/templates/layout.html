@@ -39,8 +39,7 @@
                     <li>
                         <a href="/mock/management/signup">注册</a>
                     </li>
-                    {{/ifeq}} 
-                    {{#ifeq selection 'signin'}} {{else}}
+                    {{/ifeq}} {{#ifeq selection 'signin'}} {{else}}
                     <li>
                         <a href="/mock/management/signin">登录</a>
                     </li>
@@ -59,9 +58,23 @@
         <p class="recordcode">{{{ recordcode }}}</p>
         {{/if}}
     </div>
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header hide">
+                    <h4 class="modal-title" id="errorModalLabel"></h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="/static/js/jquery.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/site.js"></script>
 {{#ifeq env 'development'}}
 <script src="/static/js/less.min.js"></script>
 {{/ifeq}}
