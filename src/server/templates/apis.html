@@ -1,0 +1,16 @@
+<div id="apis">
+    <ul class="nav nav-tabs">
+        <li role="presentation" {{#ifeq api.selection 'dashboard'}}class="active" {{/ifeq}}><a {{#ifeq api.selection 'dashboard'}}{{else}}href="/mock/management/apis/dashboard" {{/ifeq}}>总览</a></li>
+        <li role="presentation" class="disabled" {{#ifeq api.selection 'project'}}class="active" {{/ifeq}}><a {{#ifeq api.selection 'project'}}{{else}}{{!-- href="/mock/management/apis/project" --}}{{/ifeq}}>项目</a></li>
+        <li role="presentation" {{#ifeq api.selection 'mockdata'}}class="active" {{/ifeq}}><a {{#ifeq api.selection 'mockdata'}}{{else}}href="/mock/management/apis/mockdata" {{/ifeq}}>开发数据设置</a></li>
+        <li role="presentation" class="disabled" {{#ifeq api.selection 'test'}}class="active" {{/ifeq}}><a {{#ifeq api.selection 'test'}}{{else}}{{!-- href="/mock/management/apis/test" --}}{{/ifeq}}>接口测试</a></li>
+        <li role="presentation" class="disabled" {{#ifeq api.selection 'spec'}}class="active" {{/ifeq}}><a {{#ifeq api.selection 'spec'}}{{else}}{{!-- href="/mock/management/apis/spec" --}}{{/ifeq}}>工程规范文档</a></li>
+    </ul>
+    <div class="tab-content">
+        {{#ifeq api.selection 'dashboard'}} {{> dashboard}} {{/ifeq}}
+        {{#ifeq api.selection 'project'}} {{> project}} {{/ifeq}}
+        {{#ifeq api.selection 'mockdata'}} {{> mockdata}} {{/ifeq}}
+        {{#ifeq api.selection 'test'}} {{> test}} {{/ifeq}}
+        {{#ifeq api.selection 'spec'}} {{> spec}} {{/ifeq}}
+    </div>
+</div>

@@ -17,12 +17,16 @@ router.get('/docs', auth(), (req, res) => {
     res.render('docs');
 });
 
-router.get('/apis', auth(auth.user), (req, res) => {
+router.get('/apis/*', auth(auth.user), (req, res) => {
     const locals = res.locals;
+    const path = req.path;
+
     locals.selection = 'apis';
     locals.title = 'api管理';
-
-    res.render('docs');
+    locals.api = {
+        selection: path.replace(/\/apis\/(.*?)(\/|\?|#|$)/, '$1')
+    }
+    res.render('apis');
 });
 
 router.get('/signup', (req, res) => {
@@ -40,7 +44,7 @@ router.get('/signup', (req, res) => {
 }).get('/signout', async (req, res) => {
     const { destroyToken } = require('./../functions/user');
     await destroyToken(req.mockToken);
-    res.redirect('/mock/management');
+    res.clearCookie('mockToken', { path: '/mock' }).redirect('/mock/management');
 });
 
 module.exports = router;

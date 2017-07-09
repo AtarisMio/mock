@@ -1,3 +1,4 @@
+const path = require('path');
 const helpers = {
     ifeq: function (a, b, options) {
         if (a == b) { // eslint-disable-line eqeqeq
@@ -17,6 +18,6 @@ const helpers = {
 module.exports = (hbs) => {
 
     hbs.registerHelper(helpers);
-
+    hbs.registerPartials(path.join(__dirname, './../server/partials'));
     return hbs;
 }

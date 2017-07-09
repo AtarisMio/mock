@@ -1,4 +1,4 @@
-<div id="login">
+<div id="signin">
     <div class="auth-wrapper">
         <div class="auth-box">
             <div>
@@ -12,19 +12,27 @@
                 </div>
                 <div class="auth-box__col">
                     <form class="Form">
-                        <div class="FormField" for="name">
+                        <div class="FormField" for="username">
                             <label for="username" class="FormLabel">用户名</label>
-                            <input type="text" name="username" value="" class="FormInput">
+                            <input type="text" id="username" name="username" value="" class="FormInput">
                         </div>
                         <div class="FormField" for="password">
                             <label for="password" class="FormLabel">密码</label>
-                            <input type="password" name="password" value="" class="FormInput">
+                            <input type="password" id="password" name="password" value="" class="FormInput">
                         </div>
-                        <button id="signin" class="btn btn-primary">登录</button>
+                        {{#ifeq selection 'signup'}}
+                        <div class="FormField" for="confirmPassword">
+                            <label for="confirmPassword" class="FormLabel">密码</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" value="" class="FormInput">
+                        </div>
+                        {{/ifeq}}
+                        <button id="{{#ifeq selection 'signup'}}signup{{else}}signin{{/ifeq}}" class="btn btn-primary">
+                            {{#ifeq selection 'signup'}}注册{{else}}登录{{/ifeq}}
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="/static/js/signin.js"></script>
+<script defer src="/static/js/signin.js"></script>

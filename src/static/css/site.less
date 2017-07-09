@@ -9,7 +9,7 @@ body {
     padding-top: 50px;
 }
 
-#login {
+#signin {
     .auth-wrapper {
         margin: 0 auto;
         max-width: 600px;
@@ -109,6 +109,39 @@ body {
                     background-image: none;
                     display: block;
                 }
+            }
+        }
+    }
+}
+
+#apis {
+    .apis-table {
+        min-height: 400px;
+        table{
+            tbody{
+                tr {
+                    td[role=apiUpdateTime], td[role=apiEditor] {
+                        width: 22ex;
+                    }
+                    td[role=apiEditor] {
+                        display: none;
+                    }
+                    &:hover {
+                        td[role=apiUpdateTime] {
+                            display: none;
+                        }
+                        td[role=apiEditor] {
+                            display: table-cell;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    #mockEditorModal {
+        .modal-body {
+            p.description {
+                text-align: right;
             }
         }
     }

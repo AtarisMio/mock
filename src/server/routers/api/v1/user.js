@@ -35,7 +35,7 @@ router
             // todo 删除token
             await destroyToken(mockToken);
             res
-                .clearCookie()
+                .clearCookie('mockToken', { path: '/mock' })
                 .status(200)
                 .json(Packing({}, 0, 'Signout', '已安全退出'));
         }

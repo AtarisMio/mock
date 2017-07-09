@@ -1,0 +1,91 @@
+<div class="apis-table">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td><input id="selectAll" type="checkbox"></td>
+                    <td>名称</td>
+                    <td>路径</td>
+                    <td>方法</td>
+                    <td>负责人</td>
+                    <td>创建者</td>
+                    <td>最后修改时间</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-mockdata="{id:1}">
+                    <td role="selector"><input type="checkbox"></td>
+                    <td role="apiName">用户信息</td>
+                    <td role="apiPath">/api/v1/user</td>
+                    <td role="apiMethod">GET</td>
+                    <td role="apiOwner">徐航</td>
+                    <td role="apiCreator">徐航</td>
+                    <td role="apiUpdateTime">2017-07-01 16:38:33</td>
+                    <td role="apiEditor">
+                        <span>编辑</span>
+                        <span>删除</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="mockEditorModal" tabindex="-1" role="dialog" aria-labelledby="mockEditorModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header hide">
+                    <h4 class="modal-title" id="mockEditorModalLabel">/api/v1/user</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="" class="col-sm-2 control-label">接口名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-sm-2 control-label">接口路径</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-sm-2 control-label">接口动词</label>
+                            <div class="col-sm-10">
+                                <select class="form-control">
+                                    <option value="ALL">ALL</option>
+                                    <option value="GET">GET</option>
+                                    <option value="POST">POST</option>
+                                    <option value="PUT">PUT</option>
+                                    <option value="PATCH">PATCH</option>
+                                    <option value="DELETE">DELETE</option>
+                                    <option value="COPY">COPY</option>
+                                    <option value="HEAD">HEAD</option>
+                                    <option value="OPTIONS">OPTIONS</option>
+                                    <option value="LINK">LINK</option>
+                                    <option value="UNLINK">UNLINK</option>
+                                    <option value="PURGE">PURGE</option>
+                                    <option value="LOCK">LOCK</option>
+                                    <option value="UNLOCK">UNLOCK</option>
+                                    <option value="PROPFIND">PROPFIND</option>
+                                    <option value="VIEW">VIEW</option>
+                                </select>
+                                <p class="description">*ALL不是一个基本动词而是对所有请求皆做响应</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-sm-2 control-label">接口数据</label>
+                            <div id="jsoneditor" style="width: 100%; min-height: 400px;"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">提交</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script defer src="/static/js/mockdata.js"></script>
