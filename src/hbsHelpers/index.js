@@ -7,6 +7,13 @@ const helpers = {
             return options.inverse(this);
         }
     },
+    fallBack: function () {
+        for(var i = 0; i < arguments.length; i++) {
+            if (arguments[i]) {
+                return arguments[i];
+            }
+        }
+    },
     json: function(json, options) {
         return JSON.stringify(json);
     },
