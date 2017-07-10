@@ -14,7 +14,7 @@ var v4template = {
     'success': true
 };
 
-window.onload = function () {
+window.onload = function() {
     var preDataGenerator = new JSONEditor(document.getElementById('preDataGenerator'), options, v4template);
     var postDataGenerator = new JSONEditor(document.getElementById('postDataGenerator'), options, v4template);
     $('.addApi').off('click').on('click', function() {
@@ -27,7 +27,7 @@ window.onload = function () {
     });
     $('#apiPath').off('input').on('input', function() {
         var apiPath = $(this).val();
-        if(apiPath.length) {
+        if (apiPath.length) {
             $('.modal-header').removeClass('hide');
             $('#mockEditorModalLabel').text(apiPath);
         } else {
@@ -57,16 +57,63 @@ window.onload = function () {
     });
     $('#submit').off('click').on('click', function() {
         var id = $('form input[name=id]').val();
+        var form = $('form');
         if (id) {
-
+            var data = {
+                title: form.find('input#title').val(),
+                apiPath: form.find('input#apiPath').val(),
+                method: form.find('select#method').val(),
+                description: form.find('textarea#description').val(),
+                preDataGenerator: JSON.stringify(preDataGenerator.get()),
+                postDataGenerator: JSON.stringify(postDataGenerator.get())
+            }
+            $.ajax({
+                url: '/mock/api/v1/api/' + id,
+                method: 'put',
+                data: data
+            }).done(function(res) {
+                debugger;
+            })
         } else {
             $.ajax({
                 url: '/mock/api/v1/api/',
                 method: 'post',
                 data: $('form').serialize()
             }).done(function(res) {
-                // $.ajax()
+                if (res.success) {
+                    $.ajax({
+                        url: '/mock/api/v1/api/' + res.result.id,
+                        method: 'put',
+                        data: {
+                            preDataGenerator: JSON.stringify(preDataGenerator.get()),
+                            postDataGenerator: JSON.stringify(postDataGenerator.get())
+                        }
+                    }).done(function(res) {
+                        debugger;
+                    })
+                }
+            }).fail(function(xhr, status, err) {
+                debugger;
             })
         }
+    });
+    $('.editApi').off('click').on('click', function() {
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/mock/api/v1/api/' + id,
+            method: 'get'
+        }).done(function(res) {
+            var api = res.result.api;
+            var mockEditorModal = $('#mockEditorModal');
+            mockEditorModal.find('input#title').val(api.title);
+            mockEditorModal.find('input#apiPath').val(api.apiPath).attr('disabled', 'disabled');
+            $('#apiPath').trigger('input');
+            mockEditorModal.find('select#method').val(api.method);
+            mockEditorModal.find('textarea#description').val(api.description);
+            preDataGenerator.set(api.preDataGenerator);
+            postDataGenerator.set(api.postDataGenerator);
+            $('form input[name=id]').val(id);
+            mockEditorModal.modal('show');
+        });
     })
 };

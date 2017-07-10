@@ -14,18 +14,18 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each apisList}}
+                {{#each api.apisList}}
                 <tr data-mockdataId="{{id}}">
                     <td role="selector"><input id="{{id}}" type="checkbox"></td>
                     <td role="apiName">{{title}}</td>
                     <td role="apiPath">{{apiPath}}</td>
                     <td role="apiMethod">{{method}}</td>
-                    <td role="apiOwner">{{@fallBack owner.chineseName owner.username}}</td>
-                    <td role="apiCreator">{{author}}</td>
-                    <td role="apiUpdateTime">{{updateAt}}</td>
+                    <td role="apiOwner">{{author}}</td>
+                    <td role="apiCreator">{{fallBack owner.chineseName owner.username}}</td>
+                    <td role="apiUpdateTime">{{parseDate updatedAt}}</td>
                     <td role="apiEditor">
-                        <a class="editApi">编辑</a>
-                        <a class="removeApi">删除</a>
+                        <a class="editApi" data-id="{{id}}">编辑</a>
+                        <a class="removeApi" data-id="{{id}}">删除</a>
                     </td>
                 </tr>
                 {{else}}

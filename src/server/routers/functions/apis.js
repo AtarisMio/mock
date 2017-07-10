@@ -2,8 +2,8 @@ const { api, dataGenerator, valid } = require('./../../../models').models;
 
 const addApi = async (user, { apiPath, method, title, description, author }) => {
     const apiInstance = await api.create({ apiPath, method, title, description, author: author || user.chineseName });
-    apiInstance.setOwner(user);
-    user.addApi(apiInstance);
+    await apiInstance.setOwner(user);
+    await user.addApi(apiInstance);
     return apiInstance;
 };
 
@@ -31,9 +31,10 @@ const removeDataGenerator = async (api, isPre = true) => {
 };
 
 const setDataGeneratorToApi = async (api, generator, isPre = true) => {
+    await removeDataGenerator(api, isPre);
     const dataGeneratorInstance = await dataGenerator.create({ generator });
     dataGeneratorInstance.setApi(api);
-    return await setDataGenerator(api, dataGeneratorInstance);
+    return await setDataGenerator(api, dataGeneratorInstance, isPre);
 };
 
 const getValid = async (api, isPre = true) => await api[`get${isPre ? 'Pre' : 'Post'}Valid`]();

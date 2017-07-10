@@ -7,14 +7,21 @@ const helpers = {
             return options.inverse(this);
         }
     },
+    parseDate: function (date) {
+        if (date instanceof Date) {
+            return date.toLocaleString();
+        } else {
+            new Date(date).toLocaleString();
+        }
+    },
     fallBack: function () {
-        for(var i = 0; i < arguments.length; i++) {
+        for (var i = 0; i < arguments.length - 1; i++) {
             if (arguments[i]) {
                 return arguments[i];
             }
         }
     },
-    json: function(json, options) {
+    json: function (json, options) {
         return JSON.stringify(json);
     },
     parseHref: function (href, api) {
