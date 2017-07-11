@@ -3,6 +3,7 @@ const path      = require('path');
 const basename  = path.basename(module.filename);
 
 const Environments = {
+    'debug': 'debug',
     'd': 'development',
     'dev': 'development',
     'development': 'development',
@@ -20,10 +21,10 @@ const configs = {
 };
 
 glob.sync(`!(${basename}|example.js)`, {
-    cwd: 'config'
+    cwd: __dirname
 }).map(config =>
     configs[config.replace('.js', '')] = require(`./${config}`)[env]
 );
 
 
-module.exports = configs;
+module.exports = Object.freeze(configs);

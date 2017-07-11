@@ -1,0 +1,94 @@
+class CustomRandom {
+    constructor(start, end, seed = new Date().valueOf()) {
+        this.start = Number.parseInt(start);
+        this.end = Number.parseInt(end);
+        this.seed = Number.parseInt(seed);
+        if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || !Number.isSafeInteger(seed)) {
+            throw `arguments may unsafe. start=${start}; end=${end}; seed=${seed};`;
+        }
+        this.interval = this.end - this.start;
+        this.generator = new LinearCongruentialGenerator(this.seed);
+    }
+
+    next() {
+        return this.start + this.generator.next() * this.interval;
+    }
+}
+
+class LinearCongruentialGenerator {
+    /**
+     * 线性同余生成器的构造函数
+     * @param {int} seed
+     */
+    constructor(seed = new Date().valueOf()) {
+        this.seed = Number.parseInt(seed);
+        if (!Number.isSafeInteger(seed)) {
+            throw `arguments may unsafe. seed=${seed};`;
+        }
+        this.linearCongruentialGenerator = function* () {
+            while(true) {
+                this.seed = (this.seed * 3661 + 30809) % 145800;
+                yield Math.ceil(this.seed / (145800.0));
+            }
+        }.bind(this)();
+    }
+
+    setSeed(seed = new Date().valueOf()) {
+        this.seed = seed;
+    }
+
+    next() {
+        return this.linearCongruentialGenerator.next().value;
+    }
+}
+
+
+
+const charType = {
+    '\\d': new CustomRandom(0,9),
+    '\\D': new CustomRandom(),
+    '\\s': new CustomRandom(),
+    '\\S': new 
+}
+class Generator {
+    constructor(generatorRule) {
+        this.data = '';
+        this.rule = generatorRule;
+        this.splitRules = [];
+        this.testPass = false;
+    }
+
+    test() {
+        const ruleRegex = new RegExp(this.rule);
+        if (this.data) {
+            this.testPass = ruleRegex.test(this.data);
+        }
+        return this.testPass;
+    }
+
+    splitSourceRegex() {
+        let splitor = split(this.rule);
+        let res;
+        while (res = splitor.next(), !res.done) {
+            this.splitRules.push(res.value);
+        }
+    }
+}
+
+const a_regex_used_to_split_regex = /^(\\(d|D|s|S|w|W|u[0-9a-fA-F]{4,5}|x[0-9a-fA-F]{2})|\[\S+\]|\S|\\)(\*|\+|\?|\{\d+\,\d*\})?/;
+
+function* split(rule) {
+    let tempRule = rule;
+    while (tempRule.length > 0) {
+        const result = a_regex_used_to_split_regex.exec(tempRule)[0];
+        if (result.length === 0) {
+            console.error('may there a error!');
+            yield tempRule;
+            break;
+        }
+        yield result;
+        tempRule = tempRule.substr(result.length);
+    }
+}
+
+module.exports = Generator;

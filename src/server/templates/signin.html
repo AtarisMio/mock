@@ -1,0 +1,38 @@
+<div id="signin">
+    <div class="auth-wrapper">
+        <div class="auth-box">
+            <div>
+                <div class="auth-box__col">
+                    <div class="auth-box__brand">
+                        <a href="{{navLinks.home.href}}" class="auth-box__brand__logo">
+                            <p class="auth-box__brand__logo__name">AMock</p>
+                            <p class="auth-box__brand__logo__des">一个简单的MOCK平台</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="auth-box__col">
+                    <form class="Form">
+                        <div class="FormField" for="username">
+                            <label for="username" class="FormLabel">用户名</label>
+                            <input type="text" id="username" name="username" value="" class="FormInput">
+                        </div>
+                        <div class="FormField" for="password">
+                            <label for="password" class="FormLabel">密码</label>
+                            <input type="password" id="password" name="password" value="" class="FormInput">
+                        </div>
+                        {{#ifeq selection 'signup'}}
+                        <div class="FormField" for="confirmPassword">
+                            <label for="confirmPassword" class="FormLabel">密码</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" value="" class="FormInput">
+                        </div>
+                        {{/ifeq}}
+                        <button id="{{#ifeq selection 'signup'}}signupButton{{else}}signinButton{{/ifeq}}" class="btn btn-primary">
+                            {{#ifeq selection 'signup'}}注册{{else}}登录{{/ifeq}}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script defer src="/static/js/signin.js"></script>

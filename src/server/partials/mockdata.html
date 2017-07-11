@@ -1,0 +1,143 @@
+<div class="apis-table">
+    <div class="row">
+        <label class="col-sm-2 control-label">用户apiToken</label>
+        <div class="col-sm-10">
+            <input type="text" value="{{user.apiToken}}" disabled class="form-control">
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td><input id="selectAll" type="checkbox"></td>
+                    <td role="apiName">名称</td>
+                    <td role="apiPath">路径</td>
+                    <td role="apiMethod">动词</td>
+                    <td role="apiOwner">负责人</td>
+                    <td role="apiCreator">创建者</td>
+                    <td role="apiUpdateTime">最后修改时间</td>
+                    <td role="apiEditor"><a class="addApi">添加接口</a></td>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each api.apisList}}
+                <tr data-mockdataId="{{id}}">
+                    <td role="selector"><input id="{{id}}" type="checkbox"></td>
+                    <td role="apiName">{{title}}</td>
+                    <td role="apiPath">{{apiPath}}</td>
+                    <td role="apiMethod">{{method}}</td>
+                    <td role="apiOwner">{{author}}</td>
+                    <td role="apiCreator">{{fallBack owner.chineseName owner.username}}</td>
+                    <td role="apiUpdateTime">{{parseDate updatedAt}}</td>
+                    <td role="apiEditor">
+                        <a class="editApi" data-id="{{id}}">编辑</a>
+                        <a class="removeApi" data-id="{{id}}">删除</a>
+                    </td>
+                </tr>
+                {{else}}
+                <tr>
+                    <td colspan="7" style="text-align: center;">没有apis</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="confirmDeleteModalLabel"></h4>
+                </div>
+                <div class="modal-body">
+                    <p>确认删除该条规则？</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="delete" type="button" class="btn btn-danger">删除</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="mockEditorModal" tabindex="-1" role="dialog" aria-labelledby="mockEditorModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header hide">
+                    <h4 class="modal-title" id="mockEditorModalLabel"></h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <input id="id" name="id" type="text" class="hide">
+                        <div class="form-group">
+                            <label for="title" class="col-sm-2 control-label">接口名称</label>
+                            <div class="col-sm-10">
+                                <input id="title" name="title" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="apiPath" class="col-sm-2 control-label">接口路径</label>
+                            <div class="col-sm-10">
+                                <input id="apiPath" name="apiPath" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="method" class="col-sm-2 control-label">接口动词</label>
+                            <div class="col-sm-10">
+                                <select id="method" name="method" class="form-control">
+                                    <option value="ALL">ALL</option>
+                                    <option value="GET">GET</option>
+                                    <option value="POST">POST</option>
+                                    <option value="PUT">PUT</option>
+                                    <option value="PATCH">PATCH</option>
+                                    <option value="DELETE">DELETE</option>
+                                    <option value="COPY">COPY</option>
+                                    <option value="HEAD">HEAD</option>
+                                    <option value="OPTIONS">OPTIONS</option>
+                                    <option value="LINK">LINK</option>
+                                    <option value="UNLINK">UNLINK</option>
+                                    <option value="PURGE">PURGE</option>
+                                    <option value="LOCK">LOCK</option>
+                                    <option value="UNLOCK">UNLOCK</option>
+                                    <option value="PROPFIND">PROPFIND</option>
+                                    <option value="VIEW">VIEW</option>
+                                </select>
+                                <p class="description">*ALL不是一个基本动词而是对所有请求皆做响应</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">描述</label>
+                            <div class="col-sm-10">
+                                <textarea name="description" id="description"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="preDataGenerator" class="col-sm-2 control-label">接口预数据生成器</label>
+                            <div class="col-sm-10">
+                                <div class="jsonEditor" id="preDataGenerator"></div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default selectTemplate" data-target="pre" data-version='v2'>v2模板</button>
+                                    <button type="button" class="btn btn-default selectTemplate" data-target="pre" data-version='v4'>v4模板</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="postDataGenerator" class="col-sm-2 control-label">接口后数据生成器</label>
+                            <div class="col-sm-10">
+                                <div class="jsonEditor" id="postDataGenerator"></div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default selectTemplate" data-target="post" data-version='v2'>v2模板</button>
+                                    <button type="button" class="btn btn-default selectTemplate" data-target="post" data-version='v4'>v4模板</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="submit" type="button" class="btn btn-primary">提交</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script defer src="/static/js/mockdata.js"></script>
