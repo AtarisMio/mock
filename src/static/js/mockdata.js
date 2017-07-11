@@ -1,5 +1,12 @@
 var options = {
     modes: ['tree', 'text'],
+    templates: [
+        {
+            text: '正则生成数据模板',
+            title: '正则生成数据模板',
+            value: '[Regex][/Regex]'
+        }
+    ],
     mode: 'tree'
 };
 var v2template = {
@@ -72,8 +79,10 @@ window.onload = function() {
                 method: 'put',
                 data: data
             }).done(function(res) {
+                window.location.reload();
+            }).fail(function(xhr, status, err) {
                 debugger;
-            })
+            });
         } else {
             $.ajax({
                 url: '/mock/api/v1/api/',
@@ -89,7 +98,7 @@ window.onload = function() {
                             postDataGenerator: JSON.stringify(postDataGenerator.get())
                         }
                     }).done(function(res) {
-                        debugger;
+                        window.location.reload();
                     })
                 }
             }).fail(function(xhr, status, err) {
@@ -115,5 +124,22 @@ window.onload = function() {
             $('form input[name=id]').val(id);
             mockEditorModal.modal('show');
         });
+    });
+    $('.removeApi').off('click').on('click', function() {
+        var modal = $('#confirmDeleteModal');
+        var id = $(this).data('id');        
+        $('#delete').off('click').on('click', function() {
+            $.ajax({
+                url: '/mock/api/v1/api/' + id,
+                method: 'delete'
+            }).done(function(res) {
+                window.location.reload();
+            }).fail(function(xhr, status, err) {
+                debugger;
+            })
+        });
+        var title = $('tr[data-mockdataId='+id+'] td[role=apiName]').text();
+        modal.find('#confirmDeleteModalLabel').text(title);
+        modal.modal('show');
     })
 };

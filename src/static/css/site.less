@@ -117,6 +117,16 @@ body {
 #apis {
     .apis-table {
         min-height: 400px;
+        .row {
+            margin: 15px 0;
+            @media (min-width: 768px) {
+                .control-label {
+                    padding-top: 7px;
+                    margin-bottom: 0;
+                    text-align: right;
+                }
+            }
+        }
         table {
             tr {
                 td[role=apiUpdateTime],

@@ -155,6 +155,9 @@ class dataGenerator {
             case 'charset':
                 this.charsetFactory(node);
                 break;
+            case 'group':
+                // todo
+                break;
             default:
                 return;
         }
@@ -240,11 +243,12 @@ class dataGenerator {
 
 }
 
-// let a = new dataGenerator('[你-好]+');
+let a = new dataGenerator('(你好){2}');
 
-// for(let i=0;i<10;i++){
-//     let r = a.productData();
-//     console.log(r, r.split('').reduce((i,c)=>i+=' '+c.charCodeAt(0).toString(16),''));
-// }
+for(let i=0;i<10;i++){
+    let r = a.productData();
+    console.log(r);
+    console.log(r, r.split('').reduce((i,c)=>i+=' '+c.charCodeAt(0).toString(16),''));
+}
 
 module.exports = dataGenerator;

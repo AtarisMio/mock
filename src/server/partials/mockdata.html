@@ -1,4 +1,10 @@
 <div class="apis-table">
+    <div class="row">
+        <label class="col-sm-2 control-label">用户apiToken</label>
+        <div class="col-sm-10">
+            <input type="text" value="{{user.apiToken}}" disabled class="form-control">
+        </div>
+    </div>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
@@ -37,6 +43,22 @@
         </table>
     </div>
 
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="confirmDeleteModalLabel"></h4>
+                </div>
+                <div class="modal-body">
+                    <p>确认删除该条规则？</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="delete" type="button" class="btn btn-danger">删除</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="mockEditorModal" tabindex="-1" role="dialog" aria-labelledby="mockEditorModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
