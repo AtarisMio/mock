@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
+    "create-table": "node src/index.js create-table",
     "test": "mocha test/index.js"
   },
   "author": "",
@@ -17,8 +18,15 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.15.3",
     "glob": "^7.1.2",
+    "hbs": "^4.0.1",
     "ldapjs": "^1.0.1",
+    "less": "^2.7.2",
+    "log4js": "^1.1.1",
+    "mysql": "^2.13.0",
     "mysql2": "^1.2.0",
+    "range-calculator": "^1.0.0",
+    "regulex": "0.0.2",
+    "request": "^2.81.0",
     "sequelize": "^3.30.4"
   },
   "devDependencies": {
@@ -28,7 +36,6 @@
     "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
-    "log4js": "^1.1.1",
     "mocha": "^3.4.1"
   }
 }
