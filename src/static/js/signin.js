@@ -1,5 +1,5 @@
 window.onload = function() {
-    $('#signin').off('click').on('click', function(e) {
+    $('#signinButton').off('click').on('click', function(e) {
         e.preventDefault();
         $.ajax({
             url: '/mock/api/v1/user/signin',
@@ -12,7 +12,7 @@ window.onload = function() {
             errorModal(xhr.responseJSON.message, '登录错误');
         })
     });
-    $('#signup').off('click').on('click', function(e) {
+    $('#signupButton').off('click').on('click', function(e) {
         e.preventDefault();
         $.ajax({
             url: '/mock/api/v1/user/signup',

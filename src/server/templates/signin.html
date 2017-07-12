@@ -26,7 +26,7 @@
                             <input type="password" id="confirmPassword" name="confirmPassword" value="" class="FormInput">
                         </div>
                         {{/ifeq}}
-                        <button id="{{#ifeq selection 'signup'}}signup{{else}}signin{{/ifeq}}" class="btn btn-primary">
+                        <button id="{{#ifeq selection 'signup'}}signupButton{{else}}signinButton{{/ifeq}}" class="btn btn-primary">
                             {{#ifeq selection 'signup'}}注册{{else}}登录{{/ifeq}}
                         </button>
                     </form>

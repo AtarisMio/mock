@@ -17,14 +17,24 @@ router.get('/docs', auth(), (req, res) => {
     res.render('docs');
 });
 
-router.get('/apis/*', auth(auth.user), (req, res) => {
+router.get('/apis(/*|)', auth(auth.user), async (req, res) => {
     const locals = res.locals;
     const path = req.path;
 
     locals.selection = 'apis';
     locals.title = 'api管理';
     locals.api = {
-        selection: path.replace(/\/apis\/(.*?)(\/|\?|#|$)/, '$1')
+        selection: path.replace(/\/apis(\/|$)(.*?)(\/|\?|#|$)/, '$2') || 'dashboard'
+    };
+    if (locals.api.selection === 'mockdata') {
+        locals.api.apisList = await req.userInfo.getApi().map(async instance => {
+            instance.owner = await instance.getOwner();
+            instance.preValid = await instance.getPreValid();
+            instance.postValid = await instance.getPostValid();
+            instance.preDataGenerator = await instance.getPreDataGenerator();
+            instance.postDataGenerator = await instance.getPostDataGenerator();
+            return instance;
+        });
     }
     res.render('apis');
 });

@@ -43,8 +43,10 @@ router
         const { id } = req.params;
         const api = await req.userInfo.getApi({ where: { id } }).map(async api => {
             const apiObject = api.get({ plain: true });
-            apiObject.preDataGenerator = await getDataGenerator(api);
-            apiObject.postDataGenerator = await getDataGenerator(api, false);
+            const _preDataGenerator = await getDataGenerator(api);
+            const _postDataGenerator = await getDataGenerator(api, false);
+            apiObject.preDataGenerator = _preDataGenerator && _preDataGenerator.generator;
+            apiObject.postDataGenerator = _postDataGenerator && _postDataGenerator.generator;
             apiObject.preValid = await getValid(api);
             apiObject.postValid = await getValid(api, false);
             return apiObject;
@@ -92,10 +94,12 @@ router
                 api[0].set({ author });
             }
             if (preDataGenerator) {
+                setDataGeneratorToApi(api[0], JSON.parse(preDataGenerator), true);
                 // todo
             }
             if (postDataGenerator) {
                 // todo
+                setDataGeneratorToApi(api[0], JSON.parse(preDataGenerator), false);
             }
             if (preValid) {
                 // todo

@@ -20,7 +20,7 @@ app.use('/mock', require('./server/routers'));
 app.set('view engine', 'html');
 app.engine('html', registHelpers(hbs).__express);
 app.set('views', path.join(__dirname, './server/templates'));
-app.locals = Object.assign({}, app.locals, { env }, serverSideRender);
+app.locals = Object.assign({}, app.locals, { env, cache: env === 'production' ? true : false }, serverSideRender);
 
 app.use(`/${api_prefix || ''}`, require('./mock'));
 

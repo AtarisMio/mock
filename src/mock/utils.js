@@ -28,7 +28,7 @@ const getApiRegex = (req, res, next) => {
     const url = req.originalUrl;
     const method = req.method;
     if (userInfo) {
-        models.api.findAll({ where: { user: userInfo.id } })
+        userInfo.getApi()
             .then(apis => {
                 return apis.filter(api => {
                     if (api.method.toUpperCase() !== 'ALL' && api.method.toUpperCase() !== method) {
@@ -54,12 +54,12 @@ const getApiRegex = (req, res, next) => {
 };
 
 const getPreValid = (req, res, next) => {
-    const api_id = req.api && req.api.id;
-    if (api_id) {
-        models.preValid.findOne({ where: { api: api_id } })
-            .then(preValid => {
-                if (preValid) {
-                    req.preValid = Object.seal(preValid);
+    const api = req.api;
+    if (api) {
+        api.getPreValid()
+            .then(preValids => {
+                if (preValids && preValids.length > 0) {
+                    req.preValids = Object.seal(preValids);
                     req.shouldPreValid = true;
                 } else {
                     req.shouldPreValid = false;
@@ -73,12 +73,12 @@ const getPreValid = (req, res, next) => {
 };
 
 const getPostValid = (req, res, next) => {
-    const api_id = req.api && req.api.id;
-    if (api_id) {
-        models.postValid.findAll({ where: { api: api_id } })
-            .then(postValid => {
-                if (postValid) {
-                    req.postValid = Object.seal(postValid);
+    const api = req.api;
+    if (api) {
+        api.getPostValid()
+            .then(postValids => {
+                if (postValids && postValids.length > 0) {
+                    req.postValids = Object.seal(postValids);
                     req.shouldPostValid = true;
                 } else {
                     req.shouldPostValid = false;
@@ -92,9 +92,9 @@ const getPostValid = (req, res, next) => {
 };
 
 const getPreDataGenerator = (req, res, next) => {
-    const api_preDG = req.api && req.api.preDataGenerator;
-    if (api_preDG) {
-        models.dataGenerator.findOne({ where: { id: api_preDG } })
+    const api = req.api;
+    if (api) {
+        api.getPreDataGenerator()
             .then(preDataGenerator => {
                 if (preDataGenerator) {
                     req.preDataGenerator = Object.seal(preDataGenerator);
@@ -111,9 +111,9 @@ const getPreDataGenerator = (req, res, next) => {
 };
 
 const getPostDataGenerator = (req, res, next) => {
-    const api_postDG = req.api && req.api.PostDataGenerator;
-    if (api_postDG) {
-        models.dataGenerator.findOne({ where: { id: api_postDG } })
+    const api = req.api;
+    if (api) {
+        api.getPostDataGenerator()
             .then(postDataGenerator => {
                 if (postDataGenerator) {
                     req.postDataGenerator = Object.seal(postDataGenerator);
