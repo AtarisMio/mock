@@ -31,10 +31,14 @@ const removeDataGenerator = async (api, isPre = true) => {
 };
 
 const setDataGeneratorToApi = async (api, generator, isPre = true) => {
-    await removeDataGenerator(api, isPre);
-    const dataGeneratorInstance = await dataGenerator.create({ generator });
-    dataGeneratorInstance.setApi(api);
-    return await setDataGenerator(api, dataGeneratorInstance, isPre);
+    if (await hasDataGenerator(api, isPre)) {
+        const dataGeneratorInstance = await getDataGenerator(api, isPre);
+        return await dataGeneratorInstance.update({ generator });
+    } else {
+        const dataGeneratorInstance = await dataGenerator.create({ generator });
+        dataGeneratorInstance.setApi(api);
+        return await setDataGenerator(api, dataGeneratorInstance, isPre);
+    }
 };
 
 const getValid = async (api, isPre = true) => await api[`get${isPre ? 'Pre' : 'Post'}Valid`]();
