@@ -14,8 +14,8 @@ module.exports = ({ api, dataGenerator, postValid, preValid, token, user, valid 
     valid.owner = valid.belongsTo(api, { as: 'owner' }); // valid
 
     // api <-> dataGenerator
-    api.preDataGenerator = api.hasOne(dataGenerator, { as: 'preDataGenerator' });  // dataGenerator
-    api.postDataGenerator = api.hasOne(dataGenerator, { as: 'postDataGenerator' }); // dataGenerator
+    api.preDataGenerator = api.hasOne(dataGenerator, { as: 'preDataGenerator', foreignKey: 'preDataGenerator' });  // dataGenerator
+    api.postDataGenerator = api.hasOne(dataGenerator, { as: 'postDataGenerator', foreignKey: 'postDataGenerator' }); // dataGenerator
     dataGenerator.api = dataGenerator.belongsTo(api, { as: 'api' }); // dataGenerator
     console.debug('has set association.');
 };
