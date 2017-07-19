@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) =>
-    sequelize.define('valid', {
+module.exports = (sequelize, DataTypes) => {
+    const Valid = sequelize.define('valid', {
         id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
         _action: { type: DataTypes.TEXT, allowNull: true, defaultValue: null },
         action: {
@@ -27,3 +27,10 @@ module.exports = (sequelize, DataTypes) =>
         //     }
         // }
     });
+
+    Valid.associate = ({ api }) => {
+        Valid.owner = Valid.belongsTo(api, { as: 'owner' }); // valid
+    };
+
+    return Valid;
+};

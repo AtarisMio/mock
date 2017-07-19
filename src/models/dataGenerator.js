@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) =>
-    sequelize.define('dataGenerator', {
+module.exports = (sequelize, DataTypes) => {
+    const DataGenerator = sequelize.define('dataGenerator', {
         id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
         _generator: { type: DataTypes.TEXT, allowNull: true, defaultValue: null },
         generator: {
@@ -21,3 +21,10 @@ module.exports = (sequelize, DataTypes) =>
         },
         merge: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true }
     });
+
+    DataGenerator.associate = ({ api }) => {
+        DataGenerator.api = DataGenerator.belongsTo(api, { as: 'api' }); // dataGenerator
+    };
+
+    return DataGenerator;
+};

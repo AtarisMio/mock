@@ -1,7 +1,7 @@
 const md5 = require('./../utils/md5');
 const config = require('./../../config').mysql;
-module.exports = (sequelize, DataTypes) =>
-    sequelize.define('user', {
+module.exports = (sequelize, DataTypes) => {
+    const User = sequelize.define('user', {
         id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true, unique: true },
         username: { type: DataTypes.STRING, unique: true },
         password_hash: DataTypes.STRING,
@@ -38,3 +38,10 @@ module.exports = (sequelize, DataTypes) =>
             }
         ]
     });
+
+    User.associate = ({ api }) => {
+        User.api = User.hasMany(api, { as: 'api' }); // api
+    };
+
+    return User;
+};
