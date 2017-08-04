@@ -24,6 +24,10 @@ app.locals = Object.assign({}, app.locals, { env, cache: env === 'production' ? 
 
 app.use(`/${api_prefix || ''}`, require('./mock'));
 
+app.get('/', (req, res) => {
+    res.redirect('/mock/management');
+})
+
 app.listen(3000, function () {
     console.log('App listening on port 3000!');
 });

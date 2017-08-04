@@ -13,7 +13,6 @@ modelsName.map(modelName => {
     let model = sequelize.import(path.join(__dirname, `./${modelName}`));
     models[model.name] = model;
 });
-require('./Associations')(models);
 
 for(let modelName in models) {
     if('associate' in models[modelName]) {

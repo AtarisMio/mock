@@ -102,26 +102,32 @@ class dataGenerator {
                 this.repeatFactory(node, this.dataFactory.bind(this));
             }
         });
-        return (function DFS_traverse(nodes) {
-            let tmp = '';
-            nodes.map((node) => {
-                if (node.sub) {
-                    tmp += node.resultData = DFS_traverse(node.sub);
-                } else {
-                    tmp += node.resultData;
-                }
-                if (node.type === 'backref') { // 响应bcakref的引用情况
-                    tmp += node.resultData = this.Groups[node.num].resultData;
-                }
-            });
-            return tmp;
-        }).bind(this)(this.AST.tree);
+        return this.DFS_traverse.bind(this)(this.AST.tree);
+    }
+
+    DFS_traverse(nodes) {
+        let tmp = '';
+        nodes.map((node) => {
+            if (node.sub) {
+                tmp += node.resultData = this.DFS_traverse(node.sub);
+            } else {
+                tmp += node.resultData;
+            }
+            if (node.type === 'backref') { // 响应bcakref的引用情况
+                tmp += node.resultData = this.Groups[node.num].resultData;
+            }
+        });
+        return tmp;
     }
 
     dataFactory(node, type = node.type) {
         switch (type) {
             case 'choice':
                 throw new Error('there shouldn\'t be type of [\'choice\']');
+            case 'group':
+                this.resultData += this.DFS_traverse(node.sub);
+                // todo
+                break;
             case 'exact':
                 this.exactDataFactory(node);
                 break;
@@ -154,9 +160,6 @@ class dataGenerator {
                 break;
             case 'charset':
                 this.charsetFactory(node);
-                break;
-            case 'group':
-                // todo
                 break;
             default:
                 return;

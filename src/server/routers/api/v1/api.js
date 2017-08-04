@@ -99,7 +99,7 @@ router
             }
             if (postDataGenerator) {
                 // todo
-                setDataGeneratorToApi(api[0], JSON.parse(preDataGenerator), false);
+                setDataGeneratorToApi(api[0], JSON.parse(postDataGenerator), false);
             }
             if (preValid) {
                 // todo
