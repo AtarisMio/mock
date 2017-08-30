@@ -25,7 +25,7 @@ const getUserInfo = (req, res, next) => {
 
 const getApiRegex = (req, res, next) => {
     const userInfo = req.userInfo;
-    const url = req.originalUrl;
+    const url = req.baseUrl + req.path;
     const method = req.method;
     if (userInfo) {
         userInfo.getApi()

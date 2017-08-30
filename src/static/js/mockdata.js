@@ -2,9 +2,14 @@ var options = {
     modes: ['tree', 'text'],
     templates: [
         {
-            text: '正则生成数据模板',
+            text: '正则模板',
             title: '正则生成数据模板',
-            value: '[Regex][/Regex]'
+            value: '[Regex type="string"][/Regex]'
+        },
+        {
+            text: '脚本模板',
+            title: '脚本生成数据模板',
+            value: '[Script][/Script]'
         }
     ],
     mode: 'tree'
@@ -27,6 +32,7 @@ window.onload = function() {
     $('.addApi').off('click').on('click', function() {
         var mockEditorModal = $('#mockEditorModal');
         mockEditorModal.find('input').val('');
+        mockEditorModal.find('input#apiPath').val('').attr('disabled', false);
         $('#apiPath').trigger('input');
         preDataGenerator.set(v4template);
         postDataGenerator.set(v4template);
@@ -102,7 +108,9 @@ window.onload = function() {
                     })
                 }
             }).fail(function(xhr, status, err) {
-                debugger;
+                if (xhr.status === 406) {
+                    window.alert('已有同名api');
+                }
             })
         }
     });

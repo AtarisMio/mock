@@ -54,7 +54,7 @@ const onPostDataGenerator = (req, res, next) => {
     if (req.shouldPostGenerate) {
         // todo generate res data
         const data = Object.assign({}, req.postDataGenerator.generator);
-        require('./gneratorMidware')(data);
+        require('./gneratorMidware')(data, req.query, req.body, req.userInfo.chineseName || req.userInfo.username);
         res.json(data);
     }
     next();

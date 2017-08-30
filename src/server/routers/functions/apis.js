@@ -1,6 +1,10 @@
 const { api, dataGenerator, valid } = require('./../../../models').models;
 
 const addApi = async (user, { apiPath, method, title, description, author }) => {
+    const hasSameApi = !!await user.getApi({ where: { apiPath } });
+    if (hasSameApi) {
+        return null;
+    }
     const apiInstance = await api.create({ apiPath, method, title, description, author: author || user.chineseName });
     await apiInstance.setOwner(user);
     await user.addApi(apiInstance);
