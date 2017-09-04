@@ -7,6 +7,7 @@ import s from './Badge.css';
 
 class Badge extends PureComponent {
     static propTypes = {
+        className: PropTypes.string,
         badge: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.element]).isRequired,
         noBackground: PropTypes.bool,
         overlap: PropTypes.bool,
@@ -14,14 +15,15 @@ class Badge extends PureComponent {
     };
 
     static defaultProps = {
+        className: undefined,
         overlap: false,
         noBackground: false
     }
 
     render() {
-        const { children, badge, noBackground, overlap, ...props } = this.props;
+        const { className, children, badge, noBackground, overlap, ...props } = this.props;
         return (
-            <div className={cx(noBackground ? s.noBackground : null, overlap ? s.overlap : null, s.badge)} data-badge={badge} {...props}>
+            <div className={cx(className, noBackground ? s.noBackground : null, overlap ? s.overlap : null, s.badge)} data-badge={badge} {...props}>
                 {children}
             </div>
         )

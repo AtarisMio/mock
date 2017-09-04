@@ -44,7 +44,7 @@ module.exports = () => ({
         // https://github.com/iamvdo/pleeease-filters
         require('pleeease-filters')(),
         // Generate rem from pixel, e.g. div { margin: 41.4px; -> margin: 1rem; }
-        // https://github.com/robwierzbowski/node-pixrem
+        // https://github.com/songsiqi/px2rem-postcss
         require('postcss-px2rem')({remUnit: 128}),
         // Generate pixel fallback for "rem" units, e.g. div { margin: 2.5rem 2px 3em 100%; }
         // https://github.com/robwierzbowski/node-pixrem

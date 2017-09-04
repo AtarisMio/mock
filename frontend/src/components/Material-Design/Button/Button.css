@@ -1,5 +1,4 @@
 :root {
-    --button-secondary-color: #000;
     --button-fab-color-alt: #ff4081;
     --button-fab-text-color-alt: #fff;
     --button-fab-hover-color-alt: #ff4081;
@@ -13,6 +12,7 @@
     --button-primary-color: rgba(158, 158, 158, .2);
     --button-primary-color-alt: #3f51b5;
     --button-primary-color-disabled: rgba(0, 0, 0, .12);
+    --button-secondary-color: #000;
     --button-secondary-color-alt: #fff;
     --button-secondary-color-disabled: rgba(0, 0, 0, .26);
     --button-ripple-color-alt: #fff;
@@ -88,9 +88,9 @@ input.button {
 
 .raised {
     background: var(--button-primary-color);
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, var(--shadow-key-penumbra-opacity)), 0 3px 1px -2px rgba(0, 0, 0, var(--shadow-key-umbra-opacity)), 0 1px 5px 0 rgba(0, 0, 0, var(--shadow-ambient-shadow-opacity));
+    box-shadow: 0 2px 2px 0 var(--shadow-key-penumbra-opacity), 0 3px 1px -2px var(--shadow-key-umbra-opacity), 0 1px 5px 0 var(--shadow-ambient-shadow-opacity);
     &:active {
-        box-shadow: 0 4px 5px 0 rgba(0, 0, 0, var(--shadow-key-penumbra-opacity)), 0 1px 10px 0 rgba(0, 0, 0, var(--shadow-ambient-shadow-opacity)), 0 2px 4px -1px rgba(0, 0, 0, var(--shadow-key-umbra-opacity));
+        box-shadow: 0 4px 5px 0 var(--shadow-key-penumbra-opacity), 0 1px 10px 0 var(--shadow-ambient-shadow-opacity), 0 2px 4px -1px var(--shadow-key-umbra-opacity);
         background-color: var(--button-active-color);
     }
     &:focus:not(:active) {
@@ -111,7 +111,7 @@ input.button {
     &:focus:not(:active) {
         background-color: var(--button-active-color-alt);
     }
-    & .mdl-ripple {
+    & .ripple {
         background: var(--button-ripple-color-alt);
     }
 }
@@ -147,7 +147,7 @@ input.button {
         -webkit-mask-image: -webkit-radial-gradient(circle, white, black);
     }
     &:active {
-        box-shadow: 0 4px 5px 0 rgba(0, 0, 0, var(--shadow-key-penumbra-opacity)), 0 1px 10px 0 rgba(0, 0, 0, var(--shadow-ambient-shadow-opacity)), 0 2px 4px -1px rgba(0, 0, 0, var(--shadow-key-umbra-opacity));
+        box-shadow: 0 4px 5px 0 var(--shadow-key-penumbra-opacity), 0 1px 10px 0 var(--shadow-ambient-shadow-opacity), 0 2px 4px -1px var(--shadow-key-umbra-opacity);
         background-color: var(--button-active-color);
     }
     &:focus:not(:active) {
@@ -168,7 +168,7 @@ input.button {
     &:active {
         background-color: var(--button-fab-active-color-alt);
     }
-    & .mdl-ripple {
+    & .ripple {
         background: var(--button-fab-ripple-color-alt);
     }
 }
@@ -193,7 +193,7 @@ input.button {
         line-height: var(--button-fab-font-size);
         width: var(--button-fab-font-size);
     }
-    &.mdl-button--mini-icon {
+    &.mini-icon {
         height: var(--button-icon-size-mini);
         min-width: var(--button-icon-size-mini);
         width: var(--button-icon-size-mini);
@@ -202,8 +202,8 @@ input.button {
             left: calc((var(--button-icon-size-mini) - var(--button-fab-font-size)) / 2);
         }
     }
-    & .mdl-button__ripple-container {
-        border-radius: 50%; // Fixes clipping bug in Safari.
+    & .ripple-container {
+        border-radius: 50%;
         -webkit-mask-image: -webkit-radial-gradient(circle, white, black);
     }
 }
@@ -247,21 +247,18 @@ input.button {
 }
 
 .button {
-    // Bump up specificity by using [disabled] twice.
     &[disabled][disabled] {
         color: var(--button-secondary-color-disabled);
         cursor: default;
         background-color: transparent;
     }
     &.fab {
-        // Bump up specificity by using [disabled] twice.
         &[disabled][disabled] {
             background-color: var(--button-primary-color-disabled);
             color: var(--button-secondary-color-disabled);
         }
     }
     &.raised {
-        // Bump up specificity by using [disabled] twice.
         &[disabled][disabled] {
             background-color: var(--button-primary-color-disabled);
             color: var(--button-secondary-color-disabled);
@@ -269,7 +266,6 @@ input.button {
         }
     }
     &.colored {
-        // Bump up specificity by using [disabled] twice.
         &[disabled][disabled] {
             color: var(--button-secondary-color-disabled);
         }
