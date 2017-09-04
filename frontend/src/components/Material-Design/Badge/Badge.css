@@ -1,0 +1,50 @@
+:root {
+    --badge-size: 22px;
+    --badge-font-size: 12px;
+    --badge-padding: 2px;
+    --badge-overlap: 12px;
+    --badge-background: #ff4081;
+    --badge-background-inverse: rgba(255,255,255,.2);
+    --badge-color: #fff;
+    --badge-color-inverse: #ff4081;
+}
+
+.badge {
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
+    margin-right: calc(var(--badge-size) + var(--badge-padding));
+    &::after {
+        content: attr(data-badge);
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        position: absolute;
+        top: calc(var(--badge-size) / 2 * -1);
+        right: calc((var(--badge-size) + var(--badge-padding)) * -1);
+        /* font-family: $preferred_font; */
+        font-weight: 600;
+        font-size: var(--badge-font-size);
+        width: var(--badge-size);
+        height: var(--badge-size);
+        border-radius: 50%;
+        background: var(--badge-background);
+        color: var(--badge-color);
+    }
+}
+
+.overlap {
+    margin-right: calc(var(--badge-size) - var(--badge-overlap));
+    &::after {
+        right: calc(-1 * (var(--badge-size) - var(--badge-overlap)));
+    }
+}
+
+.noBackground::after {
+    color: var(--badge-color-inverse);
+    background: var(--badge-background-inverse);
+    box-shadow: 0 0 1px grey;
+}
