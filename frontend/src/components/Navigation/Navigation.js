@@ -12,15 +12,15 @@ import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Navigation.css';
 import Link from '../Link';
-import Button from '../Material-Design/Button/Button';
+import Chip from '../Material-Design/Chip/Chip';
 
 class Navigation extends React.Component {
     render() {
         return (
             <div className={s.root} role="navigation">
-                <Button type={'raised'} ripple >
-                    About
-                </Button>
+                <Chip contact='A' onDelete={()=>{}}>
+                    <span>About</span>
+                </Chip>
                 <Link className={s.link} to="/contact">
                     Contact
                 </Link>

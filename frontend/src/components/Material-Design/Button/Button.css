@@ -129,22 +129,10 @@ input.button {
     box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
     position: relative;
     line-height: normal;
-    & .material-icons {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(calc(var(--button-fab-font-size) / 2 * -1), calc(var(--button-fab-font-size) / 2 * -1));
-        line-height: var(--button-fab-font-size);
-        width: var(--button-fab-font-size);
-    }
     &.mini-fab {
         height: var(--button-fab-size-mini);
         min-width: var(--button-fab-size-mini);
         width: var(--button-fab-size-mini);
-    }
-    & .ripple-container {
-        border-radius: 50%;
-        -webkit-mask-image: -webkit-radial-gradient(circle, white, black);
     }
     &:active {
         box-shadow: 0 4px 5px 0 var(--shadow-key-penumbra-opacity), 0 1px 10px 0 var(--shadow-ambient-shadow-opacity), 0 2px 4px -1px var(--shadow-key-umbra-opacity);
@@ -185,41 +173,15 @@ input.button {
     overflow: hidden;
     color: inherit;
     line-height: normal;
-    & .material-icons {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(calc(var(--button-fab-font-size) / 2 * -1), calc(var(--button-fab-font-size) / 2 * -1));
-        line-height: var(--button-fab-font-size);
-        width: var(--button-fab-font-size);
-    }
     &.mini-icon {
         height: var(--button-icon-size-mini);
         min-width: var(--button-icon-size-mini);
         width: var(--button-icon-size-mini);
-        & .material-icons {
-            top: calc((var(--button-icon-size-mini) - var(--button-fab-font-size)) / 2);
-            left: calc((var(--button-icon-size-mini) - var(--button-fab-font-size)) / 2);
-        }
-    }
-    & .ripple-container {
-        border-radius: 50%;
-        -webkit-mask-image: -webkit-radial-gradient(circle, white, black);
     }
 }
 
-.ripple-container {
-    display: block;
-    height: 100%;
-    left: 0px;
-    position: absolute;
-    top: 0px;
-    width: 100%;
-    z-index: 0;
-    overflow: hidden;
-    .button[disabled] & .ripple {
-        background-color: transparent;
-    }
+.button[disabled] & .ripple {
+    background-color: transparent;
 }
 
 .primary.primary {
