@@ -1,0 +1,1 @@
+export { FontIcon, FontIcon as default } from 'react-toolbox/lib/font_icon';

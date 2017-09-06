@@ -117,7 +117,10 @@ const config = {
 
                     // Process external/third-party styles
                     {
-                        exclude: path.resolve(__dirname, '../src'),
+                        exclude: [
+                            path.resolve(__dirname, '../src'),
+                            path.resolve(__dirname, '../node_modules/react-toolbox'),
+                        ],
                         loader: 'css-loader',
                         options: {
                             sourceMap: isDebug,
@@ -128,7 +131,10 @@ const config = {
 
                     // Process internal/project styles (from src folder)
                     {
-                        include: path.resolve(__dirname, '../src'),
+                        include: [
+                            path.resolve(__dirname, '../src'),
+                            path.resolve(__dirname, '../node_modules/react-toolbox'),
+                        ],
                         loader: 'css-loader',
                         options: {
                             // CSS Loader https://github.com/webpack/css-loader
@@ -445,7 +451,11 @@ const serverConfig = {
     externals: [
         './assets.json',
         nodeExternals({
-            whitelist: [reStyle, reImage],
+            whitelist: [(name) => {
+                if (/react-transition-group/i.test(name))
+                    return false;
+                return /react-toolbox/i.test(name);
+            }, reStyle, reImage],
         }),
     ],
 

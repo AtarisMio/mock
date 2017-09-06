@@ -28,7 +28,7 @@ class ErrorPage extends React.Component {
     render() {
         if (__DEV__ && this.props.error) {
             return (
-                <div>
+                <div style={{fontSize: '16px'}}>
                     <h1>
                         {this.props.error.name}
                     </h1>
@@ -40,7 +40,7 @@ class ErrorPage extends React.Component {
         }
 
         return (
-            <div>
+            <div style={{fontSize: '16px'}}>
                 <h1>Error</h1>
                 <p>Sorry, a critical error occurred on this page.</p>
             </div>
