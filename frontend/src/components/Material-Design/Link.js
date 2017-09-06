@@ -83,7 +83,7 @@ Link.defaultProps = {
 
 const ThemedLink = withStyles(theme)(themr(LINK, theme)(Link));
 
-export { Link as RawLink, ThemedLink };
+export { Link as RawLink, ThemedLink as Link };
 
 export default ThemedLink;
 

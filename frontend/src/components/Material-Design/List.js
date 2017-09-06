@@ -34,15 +34,15 @@ export { ListDivider as RawListDivider } from 'react-toolbox/lib/list/ListDivide
 export { ListItem as RawListItem } from 'react-toolbox/lib/list/ListItem';
 
 export {
-    ThemedList,
-    ThemedListItemActions,
-    ThemedListItemContent,
-    ThemedListItemLayout,
-    ThemedListSubHeader,
-    ThemedListItemText,
-    ThemedListCheckbox,
-    ThemedListDivider,
-    ThemedListItem,
+    ThemedList as List,
+    ThemedListItemActions as ListItemActions,
+    ThemedListItemContent as ListItemContent,
+    ThemedListItemLayout as ListItemLayout,
+    ThemedListSubHeader as ListSubHeader,
+    ThemedListItemText as ListItemText,
+    ThemedListCheckbox as ListCheckbox,
+    ThemedListDivider as ListDivider,
+    ThemedListItem as ListItem
 };
 
 export default ThemedList;

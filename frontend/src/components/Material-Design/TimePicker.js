@@ -7,6 +7,6 @@ const ThemedTimePicker = withStyles(theme)(TimePicker);
 
 export { TimePicker as RawTimePicker } from 'react-toolbox/lib/time_picker/TimePicker';
 
-export { ThemedTimePicker };
+export { ThemedTimePicker as TimePicker };
 
 export default ThemedTimePicker;

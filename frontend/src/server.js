@@ -130,6 +130,7 @@ app.use((err, req, res, next) => {
         <Html
             title="Internal Server Error"
             description={err.message}
+            error
             // eslint-disable-next-line no-underscore-dangle
             styles={[{ id: 'css', cssText: errorPageStyle._getCss() }]}
         >

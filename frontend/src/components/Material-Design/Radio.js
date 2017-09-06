@@ -10,8 +10,8 @@ export { RadioButton as RawRadioButton } from 'react-toolbox/lib/radio/RadioButt
 export { RadioGroup as RawRadioGroup } from 'react-toolbox/lib/radio/RadioGroup';
 
 export {
-    ThemedRadioButton,
-    ThemedRadioGroup
+    ThemedRadioButton as RadioButton,
+    ThemedRadioGroup as RadioGroup
 };
 
 export default ThemedRadioButton;

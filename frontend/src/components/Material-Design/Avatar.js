@@ -7,6 +7,6 @@ const ThemedAvatar = withStyles(theme)(Avatar);
 
 export { Avatar as RawAvatar } from 'react-toolbox/lib/avatar/Avatar';
 
-export { ThemedAvatar };
+export { ThemedAvatar as Avatar };
 
 export default ThemedAvatar;

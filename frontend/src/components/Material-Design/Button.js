@@ -15,6 +15,6 @@ export { Button as RawButton } from 'react-toolbox/lib/button/Button';
 export { IconButton as RawIconButton } from 'react-toolbox/lib/button/IconButton';
 export { BrowseButton as RawBrowseButton } from 'react-toolbox/lib/button/BrowseButton';
 
-export { ThemedButton, ThemedIconButton, ThemedBrowseButton };
+export { ThemedButton as Button, ThemedIconButton as IconButton, ThemedBrowseButton as BrowseButton };
 
 export default ThemedButton;

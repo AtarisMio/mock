@@ -41,6 +41,7 @@ class Html extends React.Component {
                 cssText: PropTypes.string.isRequired,
             }).isRequired,
         ),
+        error: PropTypes.bool,
         store: PropTypes.object, // eslint-disable-line react/forbid-prop-types, react/require-default-props
         scripts: PropTypes.arrayOf(PropTypes.string.isRequired),
         app: PropTypes.object, // eslint-disable-line
@@ -48,12 +49,14 @@ class Html extends React.Component {
     };
 
     static defaultProps = {
+        error: false,
         styles: [],
         scripts: [],
     };
 
     render() {
         const {
+            error,
             title,
             description,
             styles,
@@ -88,11 +91,11 @@ class Html extends React.Component {
                         id="app"
                         dangerouslySetInnerHTML={{ __html: children }}
                     />
-                    <script
+                    { error ? null : <script
                         dangerouslySetInnerHTML={{
                             __html: `(${serialize(remHandle)})()`,
                         }}
-                    />
+                    /> }
                     <script
                         dangerouslySetInnerHTML={{
                             __html: `window.App=${serialize(app)}`,

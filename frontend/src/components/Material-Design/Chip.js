@@ -7,6 +7,6 @@ const ThemedChip = withStyles(theme)(Chip);
 
 export { Chip as RawChip } from 'react-toolbox/lib/chip/Chip';
 
-export { ThemedChip };
+export { ThemedChip as Chip };
 
 export default ThemedChip;

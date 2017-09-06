@@ -7,6 +7,6 @@ const ThemedOverlay = withStyles(theme)(Overlay);
 
 export { Overlay as RawOverlay } from 'react-toolbox/lib/overlay/Overlay';
 
-export { ThemedOverlay };
+export { ThemedOverlay as Overlay };
 
 export default ThemedOverlay;

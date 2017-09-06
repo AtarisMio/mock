@@ -16,11 +16,11 @@ export { CardMedia as RawCardMedia } from 'react-toolbox/lib/card/CardMedia';
 export { CardText as RawCardText } from 'react-toolbox/lib/card/CardText';
 
 export {
-    ThemedCard,
-    ThemedCardTitle,
-    ThemedCardActions,
-    ThemedCardMedia,
-    ThemedCardText
+    ThemedCard as Card,
+    ThemedCardTitle as CardTitle,
+    ThemedCardActions as CardActions,
+    ThemedCardMedia as CardMedia,
+    ThemedCardText as CardText
 };
 
 export default ThemedCard;

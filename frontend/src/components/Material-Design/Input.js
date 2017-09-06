@@ -7,6 +7,6 @@ const ThemedInput = withStyles(theme)(Input);
 
 export { Input as RawInput } from 'react-toolbox/lib/input/Input';
 
-export { ThemedInput };
+export { ThemedInput as Input };
 
 export default ThemedInput;

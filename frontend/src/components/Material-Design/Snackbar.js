@@ -7,6 +7,6 @@ const ThemedSnackbar = withStyles(theme)(Snackbar);
 
 export { Snackbar as RawSnackbar } from 'react-toolbox/lib/snackbar/Snackbar';
 
-export { ThemedSnackbar };
+export { ThemedSnackbar as Snackbar };
 
 export default ThemedSnackbar;

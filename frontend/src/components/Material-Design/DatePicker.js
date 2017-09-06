@@ -7,8 +7,6 @@ const ThemedDatePicker = withStyles(theme)(DatePicker);
 
 export { DatePicker as RawDatePicker } from 'react-toolbox/lib/date_picker/DatePicker';
 
-export {
-    ThemedDatePicker
-};
+export { ThemedDatePicker as DatePicker };
 
 export default ThemedDatePicker;

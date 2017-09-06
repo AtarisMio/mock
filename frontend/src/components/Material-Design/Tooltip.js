@@ -7,6 +7,6 @@ const ThemedTooltip = withStyles(theme)(Tooltip);
 
 export { Tooltip as RawTooltip } from 'react-toolbox/lib/tooltip/Tooltip';
 
-export { ThemedTooltip };
+export { ThemedTooltip as Tooltip };
 
 export default ThemedTooltip;

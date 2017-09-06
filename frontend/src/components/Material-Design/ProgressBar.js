@@ -7,6 +7,6 @@ const ThemedProgressBar = withStyles(theme)(ProgressBar);
 
 export { ProgressBar as RawProgressBar } from 'react-toolbox/lib/progress_bar/ProgressBar';
 
-export { ThemedProgressBar };
+export { ThemedProgressBar as ProgressBar };
 
 export default ThemedProgressBar;

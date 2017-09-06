@@ -7,6 +7,6 @@ const ThemedSlider = withStyles(theme)(Slider);
 
 export { Slider as RawSlider } from 'react-toolbox/lib/slider/Slider';
 
-export { ThemedSlider };
+export { ThemedSlider as Slider };
 
 export default ThemedSlider;

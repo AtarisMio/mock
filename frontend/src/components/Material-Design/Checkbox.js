@@ -7,6 +7,6 @@ const ThemedCheckbox = withStyles(theme)(Checkbox);
 
 export { Checkbox as RawCheckbox } from 'react-toolbox/lib/checkbox/Checkbox';
 
-export { ThemedCheckbox };
+export { ThemedCheckbox as Checkbox };
 
 export default ThemedCheckbox;

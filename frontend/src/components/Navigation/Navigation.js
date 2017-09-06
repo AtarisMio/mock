@@ -10,11 +10,13 @@
 import React from 'react';
 import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-// import Button from '../Material-Design/Button';
-import {
-    Button
-} from 'react-toolbox';
-import theme from 'react-toolbox/lib/button/theme.css';
+import Button from '../Material-Design/Button';
+import Chip from '../Material-Design/Chip';
+import FontIcon from '../Material-Design/FontIcon';
+// import {
+//     Button
+// } from 'react-toolbox';
+// import theme from 'react-toolbox/lib/button/theme.css';
 
 import s from './Navigation.css';
 import Link from '../Link';
@@ -25,6 +27,12 @@ class Navigation extends React.Component {
         return (
             <div className={s.root} role="navigation">
                 <Button label='About' />
+                <Chip deletable>
+                    About
+                </Chip>
+                <FontIcon>
+                cancel
+                </FontIcon>
                 <Link className={s.link} to="/about">
                     <span>About</span>
                 </Link>
@@ -44,4 +52,4 @@ class Navigation extends React.Component {
     }
 }
 
-export default withStyles(s, theme)(Navigation);
+export default withStyles(s)(Navigation);

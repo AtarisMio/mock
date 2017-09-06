@@ -6,6 +6,6 @@ import theme from 'react-toolbox/lib/ripple/theme.css';
 const ThemedRipple = (...args) => withStyles(theme)(Ripple(...args));
 
 export { default as RawRipple } from 'react-toolbox/lib/ripple/Ripple';
-export { ThemedRipple };
+export { ThemedRipple as Ripple };
 
 export default ThemedRipple;

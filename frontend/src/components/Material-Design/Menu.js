@@ -19,10 +19,10 @@ export { MenuItem as RawMenuItem } from 'react-toolbox/lib/menu/MenuItem';
 export { IconMenu as RawIconMenu } from 'react-toolbox/lib/menu/IconMenu';
 
 export {
-    ThemedMenu,
-    ThemedMenuDivider,
-    ThemedMenuItem,
-    ThemedIconMenu,
+    ThemedMenu as Menu,
+    ThemedMenuDivider as MenuDivider,
+    ThemedMenuItem as MenuItem,
+    ThemedIconMenu as IconMenu
 };
 
 export default ThemedMenu;

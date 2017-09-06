@@ -14,10 +14,10 @@ export { NavDrawer as RawNavDrawer } from 'react-toolbox/lib/layout/NavDrawer';
 export { Panel as RawPanel } from 'react-toolbox/lib/layout/Panel';
 
 export {
-    ThemedLayout,
-    ThemedSidebar,
-    ThemedNavDrawer,
-    ThemedPanel
+    ThemedLayout as Layout,
+    ThemedSidebar as Sidebar,
+    ThemedNavDrawer as NavDrawer,
+    ThemedPanel as Panel
 };
 
 export default ThemedLayout;

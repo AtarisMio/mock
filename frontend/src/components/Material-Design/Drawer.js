@@ -7,6 +7,6 @@ const ThemedDrawer = withStyles(theme)(Drawer);
 
 export { Drawer as RawDrawer } from 'react-toolbox/lib/drawer/Drawer';
 
-export { ThemedDrawer };
+export { ThemedDrawer as Drawer };
 
 export default ThemedDrawer;

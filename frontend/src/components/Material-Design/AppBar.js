@@ -7,6 +7,6 @@ const ThemedAppBar = withStyles(theme)(AppBar);
 
 export { AppBar as RawAppBar } from 'react-toolbox/lib/app_bar/AppBar';
 
-export { ThemedAppBar };
+export { ThemedAppBar as AppBar };
 
 export default ThemedAppBar;

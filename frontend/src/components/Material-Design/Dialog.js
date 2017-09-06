@@ -7,6 +7,6 @@ const ThemedDialog = withStyles(theme)(Dialog);
 
 export { Dialog as RawDialog } from 'react-toolbox/lib/dialog/Dialog';
 
-export { ThemedDialog };
+export { ThemedDialog as Dialog };
 
 export default ThemedDialog;

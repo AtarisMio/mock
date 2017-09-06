@@ -9,6 +9,9 @@ const ThemedTabs = withStyles(theme)(Tabs);
 export { Tab as RawTab } from 'react-toolbox/lib/tabs/Tab';
 export { Tabs as RawTabs } from 'react-toolbox/lib/tabs/Tabs';
 
-export { ThemedTab, ThemedTabs };
+export {
+    ThemedTab as Tab,
+    ThemedTabs as Tabs
+};
 
 export default ThemedTabs;

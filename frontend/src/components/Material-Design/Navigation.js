@@ -12,6 +12,6 @@ import { RawButton } from './Button';
 const Navigation = navigationFactory(RawButton, RawLink);
 const ThemedNavigation = withStyles(theme)(themr(NAVIGATION, theme)(navigationFactory(RawButton, RawLink)));
 
-export { Navigation as RawNavigation, ThemedNavigation };
+export { Navigation as RawNavigation, ThemedNavigation as Navigation };
 
 export default ThemedNavigation;

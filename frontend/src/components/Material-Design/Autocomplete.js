@@ -7,6 +7,6 @@ const ThemedAutocomplete = withStyles(theme)(Autocomplete);
 
 export { Autocomplete as RawAutocomplete } from 'react-toolbox/lib/autocomplete/Autocomplete';
 
-export { ThemedAutocomplete };
+export { ThemedAutocomplete as Autocomplete };
 
 export default ThemedAutocomplete;

@@ -19,10 +19,10 @@ export { TableRow as RawTableRow } from 'react-toolbox/lib/table/TableRow';
 export { TableCell as RawTableCell } from 'react-toolbox/lib/table/TableCell';
 
 export {
-    ThemedTable,
-    ThemedTableHead,
-    ThemedTableRow,
-    ThemedTableCell,
+    ThemedTable as Table,
+    ThemedTableHead as TableHead,
+    ThemedTableRow as TableRow,
+    ThemedTableCell as TableCell
 };
 
 export default ThemedTable;

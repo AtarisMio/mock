@@ -7,6 +7,6 @@ const ThemedSwitch = withStyles(theme)(Switch);
 
 export { Switch as RawSwitch } from 'react-toolbox/lib/switch/Switch';
 
-export { ThemedSwitch };
+export { ThemedSwitch as Switch };
 
 export default ThemedSwitch;
