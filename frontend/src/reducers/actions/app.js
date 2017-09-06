@@ -3,17 +3,17 @@
  * test action 类型
  */
 
-export const ADD_TEST = 'ADD_TEST';
+export const TOGGLE_NAV_DRAWER = 'TOGGLE_NAV_DRAWER';
 
 
 /**
  * test action ()
  */
 
-export function test(testDate = {}) {
+export function toggleNavDrawer() {
     return {
-        type: ADD_TEST,
-        payload: testDate
+        type: TOGGLE_NAV_DRAWER,
+        payload: {}
     }
 }
 
@@ -22,7 +22,7 @@ export function test(testDate = {}) {
  */
 
 export const actions = {
-    test
+    toggleNavDrawer
 }
 
 // ================================
@@ -34,14 +34,14 @@ export const actions = {
 // ================================
 
 const ACTION_HANDLERS = {
-    [ADD_TEST]: (state, action) => ({ ...state, data: action.payload })
+    [TOGGLE_NAV_DRAWER]: (state) => ({ ...state, navDrawerActive: !state.navDrawerActive })
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 const initialState = {
-    isNow: true
+    navDrawerActive: false
 }
 
 export default function appReducer(state = initialState, action) {
