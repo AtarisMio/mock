@@ -1,19 +1,28 @@
+import { themr } from 'react-css-themr';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-import { Card, CardTitle, CardActions, CardMedia, CardText } from 'react-toolbox/lib/card';
+import { Card } from 'react-toolbox/lib/card/Card';
+import { cardTitleFactory } from 'react-toolbox/lib/card/CardTitle';
+import { CardActions } from 'react-toolbox/lib/card/CardActions';
+import { CardMedia } from 'react-toolbox/lib/card/CardMedia';
+import { CardText } from 'react-toolbox/lib/card/CardText';
 import theme from 'react-toolbox/lib/card/theme.css';
+import { CARD } from 'react-toolbox/lib/identifiers';
 
-const ThemedCard = withStyles(theme)(Card);
-const ThemedCardTitle = withStyles(theme)(CardTitle);
-const ThemedCardActions = withStyles(theme)(CardActions);
-const ThemedCardMedia = withStyles(theme)(CardMedia);
-const ThemedCardText = withStyles(theme)(CardText);
+import { Avatar } from './Avatar';
 
-export { Card as RawCard } from 'react-toolbox/lib/card/Card';
+const CardTitle = cardTitleFactory(Avatar);
+const ThemedCard = withStyles(theme)(themr(CARD, theme)(Card));
+const ThemedCardTitle = withStyles(theme)(themr(CARD, theme)(CardActions));
+const ThemedCardActions = withStyles(theme)(themr(CARD, theme)(CardMedia));
+const ThemedCardMedia = withStyles(theme)(themr(CARD, theme)(CardText));
+const ThemedCardText = withStyles(theme)(themr(CARD, theme)(CardTitle));
+
+export { Card as RawCard };
 export { CardTitle as RawCardTitle } from 'react-toolbox/lib/card/CardTitle';
-export { CardActions as RawCardActions } from 'react-toolbox/lib/card/CardActions';
-export { CardMedia as RawCardMedia } from 'react-toolbox/lib/card/CardMedia';
-export { CardText as RawCardText } from 'react-toolbox/lib/card/CardText';
+export { CardActions as RawCardActions };
+export { CardMedia as RawCardMedia };
+export { CardText as RawCardText };
 
 export {
     ThemedCard as Card,

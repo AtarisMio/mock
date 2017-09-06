@@ -1,11 +1,13 @@
+import { themr } from 'react-css-themr';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-import { Overlay } from 'react-toolbox/lib/overlay';
+import { Overlay } from 'react-toolbox/lib/overlay/Overlay';
 import theme from 'react-toolbox/lib/overlay/theme.css';
+import { OVERLAY } from 'react-toolbox/lib/identifiers';
 
-const ThemedOverlay = withStyles(theme)(Overlay);
+const ThemedOverlay = withStyles(theme)(themr(OVERLAY, theme)(Overlay));
 
-export { Overlay as RawOverlay } from 'react-toolbox/lib/overlay/Overlay';
+export { Overlay as RawOverlay };
 
 export { ThemedOverlay as Overlay };
 

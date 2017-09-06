@@ -1,11 +1,12 @@
+import { themr } from 'react-css-themr';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-import { Ripple } from 'react-toolbox/lib/ripple';
+import rippleFactory from 'react-toolbox/lib/ripple/Ripple';
 import theme from 'react-toolbox/lib/ripple/theme.css';
+import { RIPPLE } from 'react-toolbox/lib/identifiers';
 
-const ThemedRipple = (...args) => withStyles(theme)(Ripple(...args));
+const themedRippleFactory = options => rippleFactory({ ...options, theme });
 
-export { default as RawRipple } from 'react-toolbox/lib/ripple/Ripple';
-export { ThemedRipple as Ripple };
-
-export default ThemedRipple;
+export { rippleFactory, themedRippleFactory as Ripple };
+export { theme as rippleTheme };
+export default themedRippleFactory;

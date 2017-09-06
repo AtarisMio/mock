@@ -1,17 +1,24 @@
+import { themr } from 'react-css-themr';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-import {
-    Table,
-    TableHead,
-    TableRow,
-    TableCell
-} from 'react-toolbox/lib/table';
+import { tableFactory } from 'react-toolbox/lib/table/Table';
+import { tableHeadFactory } from 'react-toolbox/lib/table/TableHead';
+import { tableRowFactory } from 'react-toolbox/lib/table/TableRow';
+import { tableCellFactory } from 'react-toolbox/lib/table/TableCell';
 import theme from 'react-toolbox/lib/table/theme.css';
+import { TABLE } from 'react-toolbox/lib/identifiers';
 
-const ThemedTable = withStyles(theme)(Table);
-const ThemedTableHead = withStyles(theme)(TableHead);
-const ThemedTableRow = withStyles(theme)(TableRow);
-const ThemedTableCell = withStyles(theme)(TableCell);
+import { Checkbox } from './Checkbox';
+import { FontIcon } from './FontIcon';
+
+const TableCell = tableCellFactory(FontIcon);
+const ThemedTableCell = withStyles(theme)(themr(TABLE, theme)(TableCell));
+const TableHead = tableHeadFactory(Checkbox, ThemedTableCell);
+const ThemedTableHead = withStyles(theme)(themr(TABLE, theme)(TableHead));
+const TableRow = tableRowFactory(Checkbox, ThemedTableCell);
+const ThemedTableRow = withStyles(theme)(themr(TABLE, theme)(TableRow));
+const Table = tableFactory(ThemedTableHead, ThemedTableRow);
+const ThemedTable = withStyles(theme)(themr(TABLE, theme)(Table));
 
 export { Table as RawTable } from 'react-toolbox/lib/table/Table';
 export { TableHead as RawTableHead } from 'react-toolbox/lib/table/TableHead';

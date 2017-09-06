@@ -10,6 +10,8 @@
 import React from 'react';
 import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import MaterialDesignNavigation from '../Material-Design/Navigation';
+import { List, ListItem, ListSubHeader, ListDivider } from '../Material-Design/List';
 import Button from '../Material-Design/Button';
 import Chip from '../Material-Design/Chip';
 import FontIcon from '../Material-Design/FontIcon';
@@ -25,29 +27,11 @@ import Link from '../Link';
 class Navigation extends React.Component {
     render() {
         return (
-            <div className={s.root} role="navigation">
-                <Button label='About' />
-                <Chip deletable>
-                    About
-                </Chip>
-                <FontIcon>
-                cancel
-                </FontIcon>
-                <Link className={s.link} to="/about">
-                    <span>About</span>
-                </Link>
-                <Link className={s.link} to="/contact">
-                    Contact
-                </Link>
-                <span className={s.spacer}> | </span>
-                <Link className={s.link} to="/login">
-                    Log in
-                </Link>
-                <span className={s.spacer}>or</span>
-                <Link className={cx(s.link, s.highlight)} to="/register">
-                    Sign up
-                </Link>
-            </div>
+            <MaterialDesignNavigation role="navigation">
+                <List selectable ripple>
+
+                </List>
+            </MaterialDesignNavigation>
         );
     }
 }

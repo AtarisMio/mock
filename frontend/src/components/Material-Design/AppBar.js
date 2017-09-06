@@ -1,9 +1,14 @@
+import { themr } from 'react-css-themr';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-import { AppBar } from 'react-toolbox/lib/app_bar';
+import { appBarFactory } from 'react-toolbox/lib/app_bar/AppBar';
 import theme from 'react-toolbox/lib/app_bar/theme.css';
+import { APP_BAR } from 'react-toolbox/lib/identifiers';
 
-const ThemedAppBar = withStyles(theme)(AppBar);
+import { IconButton } from './Button';
+
+const AppBar = appBarFactory(IconButton);
+const ThemedAppBar = withStyles(theme)(themr(APP_BAR, theme)(AppBar));
 
 export { AppBar as RawAppBar } from 'react-toolbox/lib/app_bar/AppBar';
 

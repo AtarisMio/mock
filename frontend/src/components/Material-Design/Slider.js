@@ -1,9 +1,15 @@
+import { themr } from 'react-css-themr';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-import { Slider } from 'react-toolbox/lib/slider';
+import { sliderFactory } from 'react-toolbox/lib/slider/Slider';
 import theme from 'react-toolbox/lib/slider/theme.css';
+import { SLIDER } from 'react-toolbox/lib/identifiers';
 
-const ThemedSlider = withStyles(theme)(Slider);
+import { ProgressBar } from './ProgressBar';
+import { Input } from './Input';
+
+const Slider = sliderFactory(ProgressBar, Input)
+const ThemedSlider = withStyles(theme)(themr(SLIDER, theme)(Slider));
 
 export { Slider as RawSlider } from 'react-toolbox/lib/slider/Slider';
 

@@ -37,14 +37,13 @@ class Layout extends React.Component {
             <MaterialDesignLayout>
                 <NavDrawer
                     active={this.props.NavDrawerActive}
-                    permanentAt='xxxl'
+                    permanentAt='xxxl' pinned
                     onOverlayClick={this.toggleDrawerActive} >
                     <Navigation />
                 </NavDrawer>
                 <Panel onClick={this.toggleDrawerActive}>
                     <Header />
                     {this.props.children}
-                    <Feedback />
                     <Footer />
                 </Panel>
             </MaterialDesignLayout>
