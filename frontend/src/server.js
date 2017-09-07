@@ -25,6 +25,7 @@ import createFetch from './createFetch';
 import router from './router';
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import config from './config';
+import { linkPrefix } from './globalVariables';
 import createStore from './stores/createStore';
 
 const app = express();
@@ -50,12 +51,12 @@ app.use(bodyParser.json());
 
 app.get('/api', (req, res) => {
     res.json({a: 111});
-})
+});
 
 //
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
-app.get('*', async (req, res, next) => {
+app.get(`${linkPrefix}?*`, async (req, res, next) => {
     try {
         const css = new Set();
         // eslint-disable-next-line no-underscore-dangle
@@ -81,7 +82,7 @@ app.get('*', async (req, res, next) => {
 
         const route = await router.resolve({
             ...context,
-            path: req.path,
+            path: req.path.replace(new RegExp(`^${linkPrefix}`,'i'), ''),
             query: req.query,
         });
 
@@ -114,6 +115,10 @@ app.get('*', async (req, res, next) => {
     } catch (err) {
         next(err);
     }
+});
+
+app.get('/', (rea, res) => {
+    res.redirect(linkPrefix);
 });
 
 //

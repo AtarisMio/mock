@@ -1,5 +1,4 @@
 import { themr } from 'react-css-themr';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import { Link as MaterialDesignLink } from 'react-toolbox/lib/link/Link';
 import theme from 'react-toolbox/lib/link/theme.css';
@@ -7,7 +6,7 @@ import { LINK } from 'react-toolbox/lib/identifiers';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import history from '../../history';
+import goTo from '../../utils/to';
 
 function isLeftClickEvent(event) {
     return event.button === 0;
@@ -19,7 +18,7 @@ function isModifiedEvent(event) {
 
 /* eslint-disable */
 const Link = (
-    { to, children, onClick, ...others }
+    { to, href, children, onClick, ...others }
 ) => {
 
     const handleClick = (event) => {
@@ -36,18 +35,19 @@ const Link = (
         }
 
         event.preventDefault();
-        history.push(this.props.to);
+        goTo(to || href);
     };
 
     return (
-        <MaterialDesignLink href={to} {...others} onClick={handleClick}>
+        <MaterialDesignLink {...others} onClick={handleClick}>
             {children}
         </MaterialDesignLink>
     );
 };
 
 Link.propTypes = {
-    to: PropTypes.string.isRequired,
+    to: PropTypes.string,
+    href: PropTypes.string,
     children: PropTypes.node,
     onClick: PropTypes.func,
 };
@@ -55,12 +55,14 @@ Link.propTypes = {
 /* eslint-enable */
 
 Link.defaultProps = {
+    to: '',
+    href: '',
     onClick: null,
 };
 
-const ThemedLink = withStyles(theme)(themr(LINK, theme)(Link));
+const ThemedLink = themr(LINK, theme)(Link);
 
-export { Link as RawLink, ThemedLink as Link };
+export { ThemedLink as Link, theme as link };
 
 export default ThemedLink;
 

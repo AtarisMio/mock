@@ -19,6 +19,7 @@ import createFetch from './createFetch';
 import history from './history';
 import { updateMeta } from './DOMUtils';
 import router from './router';
+import { linkPrefix } from './globalVariables';
 import createStore from './stores/createStore';
 import { cleanCache } from './reducers/actions/fetch';
 
@@ -119,7 +120,7 @@ async function onLocationChange(location, action) {
         // and whose action method returns anything other than `undefined`.
         const route = await router.resolve({
             ...context,
-            path: location.pathname,
+            path: location.pathname.replace(new RegExp(`^${linkPrefix}`,'i'), ''),
             query: queryString.parse(location.search),
         });
 

@@ -34,14 +34,16 @@ export const actions = {
 // ================================
 
 const ACTION_HANDLERS = {
-    [TOGGLE_NAV_DRAWER]: (state) => ({ ...state, navDrawerActive: !state.navDrawerActive })
+    [TOGGLE_NAV_DRAWER]: (state) =>
+        ({ ...state, navDrawerActive: !state.navDrawerActive })
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 const initialState = {
-    navDrawerActive: false
+    hasTheme: false,
+    navDrawerActive: true
 }
 
 export default function appReducer(state = initialState, action) {

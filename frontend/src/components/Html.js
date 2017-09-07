@@ -66,7 +66,7 @@ class Html extends React.Component {
             children,
         } = this.props;
         return (
-            <html className="no-js" lang="en">
+            <html className="no-js" lang="en" style={{fontSize: '128px'}}>
                 <head>
                     <meta charSet="utf-8" />
                     <meta httpEquiv="x-ua-compatible" content="ie=edge" />

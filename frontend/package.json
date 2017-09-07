@@ -81,6 +81,7 @@
     "jest-codemods": "^0.12.0",
     "jscodeshift": "^0.3.32",
     "lint-staged": "^4.0.0",
+    "lodash.throttle": "^4.1.1",
     "markdown-it": "^8.3.1",
     "mkdirp": "^0.5.1",
     "null-loader": "^0.1.1",

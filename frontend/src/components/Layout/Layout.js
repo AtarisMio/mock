@@ -13,11 +13,10 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import normalizeCss from 'normalize.css';
 
 import { connect } from 'react-redux'
-import { toggleNavDrawer } from '../../reducers/actions/app'
 
 // external-global styles must be imported in your JS.
 import s from './Layout.css';
-import MaterialDesignLayout, { NavDrawer, Panel } from '../Material-Design/Layout'
+import { ThemeProvider, Layout as MaterialDesignLayout, NavDrawer, Panel } from '../Material-Design'
 import Navigation from '../Navigation';
 import Header from '../Header';
 import Feedback from '../Feedback';
@@ -26,36 +25,38 @@ import Footer from '../Footer';
 class Layout extends React.Component {
     static propTypes = {
         children: PropTypes.node.isRequired,
-        toggleNavDrawer: PropTypes.func.isRequired,
+        hasTheme: PropTypes.bool.isRequired,
         NavDrawerActive: PropTypes.bool.isRequired,
     };
 
-    toggleDrawerActive = () => this.props.toggleNavDrawer()
-
     render() {
         return (
-            <MaterialDesignLayout>
-                <NavDrawer
-                    active={this.props.NavDrawerActive}
-                    permanentAt='xxxl' pinned
-                    onOverlayClick={this.toggleDrawerActive} >
-                    <Navigation />
-                </NavDrawer>
-                <Panel onClick={this.toggleDrawerActive}>
-                    <Header />
-                    {this.props.children}
-                    <Footer />
-                </Panel>
-            </MaterialDesignLayout>
+            <ThemeProvider hasTheme={this.props.hasTheme} >
+                <MaterialDesignLayout>
+                    <NavDrawer
+                        scrollY
+                        pinned={this.props.NavDrawerActive}
+                    >
+                        <Navigation />
+                    </NavDrawer>
+                    <Panel>
+                        <Header />
+                        <MaterialDesignLayout  className={s.content}>
+                            {this.props.children}
+                        </MaterialDesignLayout>
+                        <Footer />
+                    </Panel>
+                </MaterialDesignLayout>
+            </ThemeProvider>
         );
     }
 }
 
 const mapDispatchToProps = {
-    toggleNavDrawer
 }
 
 const mapStateToProps = (state) => ({
+    hasTheme: state.app.hasTheme,
     NavDrawerActive: state.app.navDrawerActive
 })
 

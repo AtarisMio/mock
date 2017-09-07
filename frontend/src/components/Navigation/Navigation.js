@@ -10,11 +10,8 @@
 import React from 'react';
 import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import MaterialDesignNavigation from '../Material-Design/Navigation';
-import { List, ListItem, ListSubHeader, ListDivider } from '../Material-Design/List';
-import Button from '../Material-Design/Button';
-import Chip from '../Material-Design/Chip';
-import FontIcon from '../Material-Design/FontIcon';
+import { Navigation as MaterialDesignNavigation, Button, Chip, FontIcon, List, ListItem, ListSubHeader, ListDivider } from '../Material-Design';
+import to from '../../utils/to';
 // import {
 //     Button
 // } from 'react-toolbox';
@@ -27,9 +24,9 @@ import Link from '../Link';
 class Navigation extends React.Component {
     render() {
         return (
-            <MaterialDesignNavigation role="navigation">
+            <MaterialDesignNavigation role="navigation" className={s.mainNav}>
                 <List selectable ripple>
-
+                    <ListItem onClick={()=>to('/about')} caption="github" />
                 </List>
             </MaterialDesignNavigation>
         );

@@ -13,8 +13,9 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import { connect } from 'react-redux'
 import { toggleNavDrawer } from '../../reducers/actions/app'
+import history from '../../history';
 
-import AppBar from '../Material-Design/AppBar';
+import { AppBar, Navigation, Link } from '../Material-Design';
 
 import s from './Header.css';
 
@@ -26,11 +27,13 @@ class Header extends React.Component {
         toggleNavDrawer: PropTypes.func.isRequired,
     };
 
-    toggleDrawerActive = () => this.props.toggleNavDrawer()
-
     render() {
         return (
-            <AppBar title={siteFullName} leftIcon="menu" onLeftIconClick={this.toggleDrawerActive} >
+            <AppBar title={siteFullName} leftIcon="menu" onLeftIconClick={this.props.toggleNavDrawer} >
+                <Navigation type="horizontal">
+                    <Link href="/login" label="登陆" icon="inbox" className={s.link} />
+                    <Link href="/register" label="注册" icon="person" className={s.link} />
+                </Navigation>
             </AppBar>
         );
     }

@@ -31,6 +31,7 @@ export default (initialState = {}) => {
         ),
     );
     if (__DEV__) {
+        console.debug('redux store load at window.redux_store');
         global.redux_store = store;
     }
 

@@ -90,6 +90,7 @@ module.exports = {
                 SwitchCase: 1,
             },
         ],
+        'no-console': 0
     },
 
     settings: {
