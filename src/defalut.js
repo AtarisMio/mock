@@ -22,11 +22,11 @@ app.engine('html', registHelpers(hbs).__express);
 app.set('views', path.join(__dirname, './server/templates'));
 app.locals = Object.assign({}, app.locals, { env, cache: env === 'production' ? true : false }, serverSideRender);
 
-app.use(`/${api_prefix || ''}`, require('./mock'));
-
 app.get('/', (req, res) => {
     res.redirect('/mock/management');
-})
+});
+
+app.use(`/${api_prefix || '/*'}`, require('./mock'));
 
 app.listen(3000, function () {
     console.log('App listening on port 3000!');
