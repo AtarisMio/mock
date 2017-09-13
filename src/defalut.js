@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
     res.redirect('/mock/management');
 });
 
-app.use(`/${api_prefix || '/*'}`, require('./mock'));
+app.use(`/${api_prefix || '*'}`, require('./mock'));
 
 app.listen(3000, function () {
     console.log('App listening on port 3000!');
